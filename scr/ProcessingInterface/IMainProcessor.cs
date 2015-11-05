@@ -15,6 +15,8 @@ namespace ProcessingInterfaces
 
         void WithGlasses();
 
+        bool GetGlassesConfiguration();
+
         void WithoutGlasses();
 
         Image<Bgr, byte> GetCurrentMouthImage();
@@ -40,5 +42,11 @@ namespace ProcessingInterfaces
         void ShowLeftArrow();
 
         void HideArrows();
+
+        void BlockPrecision(bool shouldBlock);
+
+        void ResetPrecision();
+
+        bool GetBlockingConfiguration();
     }
 }

@@ -171,6 +171,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\BB.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\left-arrow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

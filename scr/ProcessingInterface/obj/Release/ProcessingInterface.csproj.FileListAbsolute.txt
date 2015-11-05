@@ -1,5 +1,0 @@
-C:\Users\aguia_000\My Projects\BeyondBodyApp\ProcessingInterface\bin\Release\ProcessingInterface.dll
-C:\Users\aguia_000\My Projects\BeyondBodyApp\ProcessingInterface\bin\Release\ProcessingInterface.pdb
-C:\Users\aguia_000\My Projects\BeyondBodyApp\ProcessingInterface\obj\Release\ProcessingInterface.csprojResolveAssemblyReference.cache
-C:\Users\aguia_000\My Projects\BeyondBodyApp\ProcessingInterface\obj\Release\ProcessingInterface.dll
-C:\Users\aguia_000\My Projects\BeyondBodyApp\ProcessingInterface\obj\Release\ProcessingInterface.pdb

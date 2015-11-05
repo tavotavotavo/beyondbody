@@ -38,8 +38,8 @@ namespace BeyondBody
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.OriginalImageViewer = new Emgu.CV.UI.ImageBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.OriginalImageViewer = new Emgu.CV.UI.ImageBox();
             ((System.ComponentModel.ISupportInitialize)(this.OriginalImageViewer)).BeginInit();
             this.SuspendLayout();
             // 
@@ -102,17 +102,11 @@ namespace BeyondBody
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.RemoveUsersButton_Click);
             // 
-            // OriginalImageViewer
-            // 
-            this.OriginalImageViewer.Location = new System.Drawing.Point(12, 12);
-            this.OriginalImageViewer.Name = "OriginalImageViewer";
-            this.OriginalImageViewer.Size = new System.Drawing.Size(308, 216);
-            this.OriginalImageViewer.TabIndex = 2;
-            this.OriginalImageViewer.TabStop = false;
-            // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Location = new System.Drawing.Point(326, 156);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(102, 17);
@@ -120,6 +114,14 @@ namespace BeyondBody
             this.checkBox1.Text = "Entrenar Gestos";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // OriginalImageViewer
+            // 
+            this.OriginalImageViewer.Location = new System.Drawing.Point(12, 12);
+            this.OriginalImageViewer.Name = "OriginalImageViewer";
+            this.OriginalImageViewer.Size = new System.Drawing.Size(308, 216);
+            this.OriginalImageViewer.TabIndex = 2;
+            this.OriginalImageViewer.TabStop = false;
             // 
             // FormMain
             // 
@@ -139,7 +141,7 @@ namespace BeyondBody
             this.MinimizeBox = false;
             this.Name = "FormMain";
             this.ShowInTaskbar = false;
-            this.Text = "Form1";
+            this.Text = "Beyond Body";
             this.Load += new System.EventHandler(this.FormMain_Load_1);
             this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.Resize += new System.EventHandler(this.FormMain_Resize);

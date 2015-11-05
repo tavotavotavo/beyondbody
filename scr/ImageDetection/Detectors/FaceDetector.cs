@@ -16,13 +16,19 @@ namespace Detectors
         private Stopwatch notDetectedTimer;
         private Face lastDetected;
         private Face lastNotFrontalDetected;
+        private Face lastFrontalDetected;
+        private Face leftProfileFakeFace;
+        private Face rightProfileFakeFace;
         private FaceDetectorPriority frontalFacePriorityItem;
         private FaceDetectorPriority profileFacePriorityItem;
         private FaceDetectorPriority rotatedFacePriorityItem;
+        private EyeDetector eyeDetector;
+
         //Implement priority
 
-        public FaceDetector()
+        public FaceDetector(EyeDetector eyeDetector)
         {
+            this.eyeDetector = eyeDetector;
             this.lastDetected = new Face();
             this.notDetectedTimer = new Stopwatch();
 
@@ -45,37 +51,78 @@ namespace Detectors
 
             if (!detectedFace.IsEmpty)
             {
+                detectedFace.IsOuttaControl = false;
                 this.notDetectedTimer.Reset();
+
+                if (detectedFace.IsFrontal && (this.lastFrontalDetected == null || this.lastFrontalDetected.IsIntoControlZone))
+                {
+                    this.eyeDetector.DetectRightEye(detectedFace);
+                    this.eyeDetector.DetectLeftEye(detectedFace);
+                }
+
+                detectedFace.Convert();
 
                 if (detectedFace.IsFrontal)
                 {
+                    this.lastFrontalDetected = detectedFace;
+
                     if (detectedFace.IsIntoControlZone)
                     {
                         this.lastDetected = detectedFace;
-                        this.facePriority.SetFirst();
+                        this.facePriority.SetFirst(this.frontalFacePriorityItem);
+
+                        if (this.lastNotFrontalDetected != null)
+                        {
+                            this.lastNotFrontalDetected.IsRightProfile = detectedFace.Center.X < detectedFace.Image.Center().X;
+                            this.lastNotFrontalDetected.IsLeftProfile = !this.lastDetected.IsRightProfile;
+                            this.lastNotFrontalDetected.IsRightRotated = false;
+                            this.lastNotFrontalDetected.IsLeftRotated = false;
+                        }
                     }
                     else
                     {
-                        this.facePriority.SetFirst(this.rotatedFacePriorityItem);
-                        this.facePriority.SetSecond(this.profileFacePriorityItem);
-                        detectedFace = this.lastNotFrontalDetected ?? detectedFace;
+                        this.facePriority.SetFirst(this.profileFacePriorityItem);
+                        this.facePriority.SetSecond(this.rotatedFacePriorityItem);
+
+                        var oldDetectedFace = detectedFace;
+                        this.lastDetected = detectedFace = this.lastNotFrontalDetected ?? detectedFace;
+
+                        if (this.lastDetected.IsProfile)
+                        {
+                            this.lastDetected.IsRightProfile = oldDetectedFace.Center.X < oldDetectedFace.Image.Center().X;
+                            this.lastDetected.IsLeftProfile = !this.lastDetected.IsRightProfile;
+                        }
+
+                        if (this.lastDetected.IsRotated)
+                        {
+                            this.lastDetected.IsRightRotated = !(oldDetectedFace.Center.X < oldDetectedFace.Image.Center().X);
+                            this.lastDetected.IsLeftRotated = !this.lastDetected.IsRightProfile;
+                        }
+
+                        detectedFace.IsOuttaControl = oldDetectedFace.IsZoneOutOfControl;
+                        detectedFace.ReplacedZone = oldDetectedFace.Zone;
                     }
                 }
                 else
                 {
                     this.lastDetected = this.lastNotFrontalDetected = detectedFace;
-                    this.facePriority.SetFirst(this.frontalFacePriorityItem);
                 }
 
                 if (detectedFace.IsProfile)
                 {
+                    this.lastDetected = this.lastNotFrontalDetected = detectedFace;
+
                     if (detectedFace.IsIntoControlZone)
                     {
                         this.facePriority.SetFirst(this.frontalFacePriorityItem);
                         this.facePriority.SetSecond(this.profileFacePriorityItem);
+                        //this.facePriority.SetSecond(this.rotatedFacePriorityItem);
+                        //detectedFace.IsOuttaControl = false;
                     }
                     else
                     {
+                        this.lastDetected.IsOuttaControl = this.lastDetected.IsZoneOutOfControl;
+                        this.lastDetected.ReplacedZone = this.lastDetected.Zone;
                         this.facePriority.SetFirst(this.profileFacePriorityItem);
                         this.facePriority.SetSecond(this.rotatedFacePriorityItem);
                     }
@@ -83,15 +130,22 @@ namespace Detectors
 
                 if (detectedFace.IsRotated)
                 {
-                    if (detectedFace.IsIntoRotatedControlZone)
+                    this.lastDetected = this.lastNotFrontalDetected = detectedFace;
+
+                    if (detectedFace.IsIntoControlZone)
                     {
+                        //this.facePriority.SetFirst(this.rotatedFacePriorityItem);
+                        //this.facePriority.SetSecond(this.profileFacePriorityItem);
                         this.facePriority.SetFirst(this.frontalFacePriorityItem);
                         this.facePriority.SetSecond(this.rotatedFacePriorityItem);
+                        //detectedFace.IsOuttaControl = false;
                     }
                     else
                     {
+                        this.lastDetected.IsOuttaControl = this.lastDetected.IsZoneOutOfControl;
+                        this.lastDetected.ReplacedZone = this.lastDetected.Zone;
                         this.facePriority.SetFirst(this.rotatedFacePriorityItem);
-                        this.facePriority.SetSecond(this.frontalFacePriorityItem);
+                        this.facePriority.SetSecond(this.profileFacePriorityItem);
                     }
                 }
             }

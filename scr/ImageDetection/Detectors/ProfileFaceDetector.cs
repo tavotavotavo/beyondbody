@@ -18,12 +18,12 @@ namespace Detectors
         {
             this.priorityAlgorithm = new LifoAlgorithm<ProfileFaceItem>();
 
-            this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(true, 0.5)));
-            this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(false, 0.5)));
+            //this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(true, 0.5)));
+            //this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(false, 0.5)));
             this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(true, 1)));
             this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(false, 1)));
-            //this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(true, 2)));
-            //this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(false, 2)));
+            //this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(true, 1.5)));
+            //this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(false, 1.5)));
         }
 
         protected override double ScanFactor
@@ -60,6 +60,10 @@ namespace Detectors
                     face.Image = image;
                     face.IsRightProfile = !item.ShouldFlip;
                     face.IsLeftProfile = item.ShouldFlip;
+
+                    if (face.IsLeftProfile) {
+                        face.FlipZoneHorizontally();
+                    }
                 }
 
                 return profileFaces;
@@ -74,6 +78,11 @@ namespace Detectors
             {
                 return "haarcascade_profileface.xml";
             }
+        }
+
+        internal void Next()
+        {
+            this.priorityAlgorithm.Next();
         }
     }
 }

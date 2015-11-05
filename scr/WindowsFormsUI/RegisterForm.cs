@@ -3,6 +3,7 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
+using Login;
 using ProcessingInterfaces;
 using System;
 using System.Collections.Generic;
@@ -14,21 +15,15 @@ using System.Windows.Forms;
 
 namespace WindowsFormsUI
 {
-    public class ImageItem
-    {
-        public Image<Bgr, byte> OriginalImage { get; set; }
-
-        public ImageBox ImageBox { get; set; }
-    }
-
     public partial class RegisterForm : Form
     {
         private IMainProcessor processor;
         private List<ImageItem> images;
         private int currentIndex;
 
-        public RegisterForm(IMainProcessor processor)
+        public RegisterForm(IMainProcessor processor, LoginService loginService)
         {
+            this.loginService = loginService;
             this.processor = processor;
             this.images = new List<ImageItem>();
 
@@ -124,6 +119,19 @@ namespace WindowsFormsUI
             }
         }
 
+        private void RemoveUsersButton_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Esta seguro que desea eliminar todos los usuarios", "Eliminación de Usuarios", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                this.processor.WaitForActionAndExecute(() =>
+                {
+                    this.loginService.DeleteUsers(this.nameTextBox.Text);
+                });
+            }
+        }
+
         private void SetCurrentIndex()
         {
             int number;
@@ -138,5 +146,36 @@ namespace WindowsFormsUI
                 this.currentIndex = 0;
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+        }
+
+        public LoginService loginService { get; set; }
+
+        private void RemoveUserButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(this.nameTextBox.Text))
+            {
+                this.nameTextBox.Text = "default";
+            }
+
+            var result = MessageBox.Show("Esta seguro que desea eliminar el usuario " + this.nameTextBox.Text, "Eliminación de Usuarios", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                this.processor.WaitForActionAndExecute(() =>
+                {
+                    this.loginService.DeleteUsers(this.nameTextBox.Text);
+                });
+            }
+        }
+    }
+
+    public class ImageItem
+    {
+        public Image<Bgr, byte> OriginalImage { get; set; }
+
+        public ImageBox ImageBox { get; set; }
     }
 }

@@ -3,17 +3,19 @@ using Detectors;
 using Domain;
 using Domain.Extensions;
 using Emgu.CV;
+using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using KeyboardSimulation.Simulators;
 using Login;
+using MouseSimulation.Simulators;
 using Processing.Actions;
 using Processing.Processors;
 using Processing.States;
-using ProcessingInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsUI;
 
@@ -42,21 +44,18 @@ namespace Processors
         private int totalCountValidFaces;
         private int totalLeftEyeClosed;
         private int totalRightEyeClosed;
-        private MiniClickAction miniClickAction;
-        private IMainProcessor processor;
         private TrainingBox trainBox;
+        private CursorSimulator cursorSimulator;
+        private bool shouldBlockPrecision;
+        private bool isLookingForGestures;
+        private bool shouldDrawEyes;
 
-        public ImageProcessor(FormMain mainForm, LoginService loginService, GesturesService gesturesService, TrainingBox trainBox)
+        public ImageProcessor(FormMain mainForm, LoginService loginService, GesturesService gesturesService, TrainingBox trainBox, CursorSimulator cursorSimulator)
         {
             try
             {
+                this.cursorSimulator = cursorSimulator;
                 this.webCam = new Capture(); //Inicializa la camara
-                // this.webCam = "USB\VID_04F2&PID_B272&REV_1156&MI_00";
-                //USB\VID_04F2&PID_B272&MI_00;
-
-                //TODO: Ver porque en la compu de Vale no anduvo,
-                //quizá falta instalar Emgu en la computadora
-                //hay que tenerlo en cuenta para el instalador
                 this.mainForm = mainForm;
                 this.loginService = loginService;
                 this.gesturesService = gesturesService;
@@ -65,9 +64,9 @@ namespace Processors
                 this.clickTimer = new Stopwatch();
                 this.mouthTimer = new Stopwatch();
                 this.speechProcessor = new SpeechProcessor();
-                this.faceDetector = new FaceDetector();
                 this.eyeDetector = new EyeDetector();
-                this.cursorLoopProcessor = new CursorLoopProcessor();
+                this.faceDetector = new FaceDetector(this.eyeDetector);
+                this.cursorLoopProcessor = new CursorLoopProcessor(this.cursorSimulator);
                 this.cursorActionProcessor = new CursorActionProcessor();
                 this.deactivateActionProcessor = new DeactivateActionProcessor(this.speechProcessor, this.cursorLoopProcessor);
 
@@ -94,22 +93,19 @@ namespace Processors
             {
                 if (this.loginService.IsLoggedIn())
                 {
-                    if (!currentDetectedFace.IsFake)
+                    if (!currentDetectedFace.IsFake && !currentDetectedFace.IsOuttaControl)
                         this.loginService.RestartTimer();
 
                     this.deactivateActionProcessor.Process(currentDetectedFace);
 
+                    this.shouldDrawEyes = false;
+
                     if (currentDetectedFace.IsFrontal)
                     {
-                        //this.processor.HideArrows();
-
                         var eyesColor = Color.DarkRed;
 
                         //Dejamos de mover el puntero del mouse
                         this.cursorLoopProcessor.Finish();
-
-                        this.eyeDetector.DetectRightEye(currentDetectedFace);
-                        this.eyeDetector.DetectLeftEye(currentDetectedFace);
 
                         if (currentDetectedFace.HasEyesCentered && !currentDetectedFace.HasBothEyesClosed)
                         {
@@ -124,15 +120,15 @@ namespace Processors
 
                                 if (this.cursorActionProcessor.FakeClicks > allowedFakeClicks)
                                 {
-                                    this.eyeDetector.IncreasePrecision();
+                                    if (!this.shouldBlockPrecision)
+                                        this.eyeDetector.IncreasePrecision();
+
                                     this.clickTimer.Restart();
                                     this.cursorActionProcessor.ResetClicksCount();
                                 };
                             }
 
-                            this.DrawZone(currentDetectedFace.RightEye, eyesColor);
-
-                            this.DrawZone(currentDetectedFace.LeftEye, eyesColor);
+                            this.shouldDrawEyes = true;
                         }
                         else
                         {
@@ -147,10 +143,6 @@ namespace Processors
                             }
                         }
 
-                        //Procesamos las acciones
-                        //Basicamente son dos acciones:
-                        //- pasar al siguiente estado
-                        //- ejecutar la accion si corresponde
                         this.cursorActionProcessor.Process(currentDetectedFace);
 
                         this.activateSpeechAction.NextState(currentDetectedFace);
@@ -167,28 +159,36 @@ namespace Processors
                             }
                         }
 
-                        if (this.speechProcessor.IsStarted())
+                        if (this.speechProcessor.IsStarted() && !this.isLookingForGestures)
                         {
-                            if (this.mouthTimer.ElapsedMilliseconds > 1000)
+                            this.isLookingForGestures = true;
+
+                            Task.Run(() =>
                             {
-                                this.gesturesService.Detect(this.currentDetectedFace);
-
-                                if (this.currentDetectedFace.Mouth.IsMakingGesture)
+                                while (this.speechProcessor.IsStarted() && this.isLookingForGestures)
                                 {
-                                    this.keyboardSimulator.PressKey(new Word(this.currentDetectedFace.Mouth.Word));
+                                    if (this.mouthTimer.ElapsedMilliseconds > 1000)
+                                    {
+                                        var word = this.gesturesService.Detect(this.currentDetectedFace, this.currentImageClean);
 
-                                    this.currentDetectedFace.Mouth.ClearGesture();
+                                        if (!string.IsNullOrWhiteSpace(word.Value))
+                                        {
+                                            this.keyboardSimulator.PressKey(word);
+                                        }
+
+                                        this.mouthTimer.Restart();
+                                    }
+                                    else
+                                    {
+                                        if (!this.mouthTimer.IsRunning)
+                                        {
+                                            this.mouthTimer.Start();
+                                        }
+                                    }
                                 }
 
-                                this.mouthTimer.Restart();
-                            }
-                            else
-                            {
-                                if (!this.mouthTimer.IsRunning)
-                                {
-                                    this.mouthTimer.Start();
-                                }
-                            }
+                                this.isLookingForGestures = false;
+                            });
                         }
                         else
                         {
@@ -196,23 +196,16 @@ namespace Processors
                         }
 
                         //Dibujamos en la imagen la cara detectada
-                        this.DrawZone(currentDetectedFace, Color.Red);
+                        //this.DrawZone(currentDetectedFace, Color.Red);
 
                         //Dibujamos la zona de control
                         this.DrawRectangle(currentDetectedFace.Image, currentDetectedFace.ControlZone, Color.DarkRed);
-                    }
-                    else
-                    {
-                        //Comienza el movimiento del cursor
-                        //if (this.lastFrontalFace.Center.X > this.lastFrontalFace.Image.Center().X)
-                        //{
-                        //    this.processor.ShowRightArrow();
-                        //}
-                        //else
-                        //{
-                        //    this.processor.ShowLeftArrow();
-                        //}
 
+                        //Dibujamos el centro de control de la cara
+                        this.DrawCircle(currentDetectedFace.Image, currentDetectedFace.Center, Color.Red);
+                    }
+                    else if (!this.currentDetectedFace.IsOuttaControl)
+                    {
                         this.cursorLoopProcessor.Start();
                         this.activateSpeechAction.Reset();
 
@@ -221,13 +214,33 @@ namespace Processors
                             if (currentDetectedFace.IsLeftProfile)
                             {
                                 this.cursorLoopProcessor.MoveCursorToLeft();
+                                //this.DrawZone(currentDetectedFace, Color.AntiqueWhite);
+
+                                //Dibujamos el centro de control de la cara
+                                this.DrawCircle(currentDetectedFace.Image,
+                                    new Point 
+                                    { 
+                                        X = currentDetectedFace.ControlZone.X + currentDetectedFace.ControlZone.Width, 
+                                        Y = currentDetectedFace.Center.Y 
+                                    },
+                                    Color.SkyBlue);
                             }
                             else if (currentDetectedFace.IsRightProfile)
                             {
                                 this.cursorLoopProcessor.MoveCursorToRight();
+                                //this.DrawZone(currentDetectedFace, Color.SkyBlue);
+
+                                //Dibujamos el centro de control de la cara
+                                this.DrawCircle(currentDetectedFace.Image,
+                                    new Point
+                                    {
+                                        X = currentDetectedFace.ControlZone.X,
+                                        Y = currentDetectedFace.Center.Y
+                                    },
+                                    Color.SkyBlue);
                             }
 
-                            this.DrawZone(currentDetectedFace, Color.SkyBlue);
+                            this.DrawRectangle(currentDetectedFace.Image, currentDetectedFace.ControlZone, Color.DarkBlue);
                         }
                         else
                         {
@@ -237,31 +250,50 @@ namespace Processors
                                 {
                                     this.cursorLoopProcessor.MoveCursorToBottom();
 
-                                    this.DrawZone(currentDetectedFace, Color.Violet);
+                                    //this.DrawZone(currentDetectedFace, Color.Violet);
                                 }
                                 else if (currentDetectedFace.IsRightRotated)
                                 {
                                     this.cursorLoopProcessor.MoveCursorToTop();
 
-                                    this.DrawZone(currentDetectedFace, Color.Violet);
+                                    //this.DrawZone(currentDetectedFace, Color.Violet);
                                 }
 
                                 //Dibujamos la zona de control
-                                this.DrawRectangle(currentDetectedFace.Image, currentDetectedFace.RotatedControlZone, Color.DarkViolet);
+                                this.DrawRectangle(currentDetectedFace.Image, currentDetectedFace.ControlZone, Color.DarkViolet);
+                                //Dibujamos el centro de control de la cara
+                                this.DrawCircle(currentDetectedFace.Image, currentDetectedFace.Center, Color.Violet);
                             }
                         }
                     }
+                    else
+                    {
+                        //Dejamos de mover el puntero del mouse
+                        this.cursorLoopProcessor.Finish();
 
-                    //Dibujamos el centro de control de la cara
-                    this.DrawCircle(currentDetectedFace.Image, currentDetectedFace.Center, Color.Red);
+                        this.DrawCircle(currentDetectedFace.Image, currentDetectedFace.ReplacedZone.Center(), Color.Black);
+                        this.DrawRectangle(currentDetectedFace.Image, currentDetectedFace.ControlZone, Color.Black);
+                    }
+
+                    if (this.shouldDrawEyes)
+                    {
+                        this.DrawZone(currentDetectedFace.RightEye, Color.YellowGreen);
+
+                        this.DrawZone(currentDetectedFace.LeftEye, Color.YellowGreen);
+                    }
                 }
                 else
                 {
-                    this.loginService.Login(this.currentImageClean);
+                    if (!this.currentDetectedFace.IsFake)
+                        this.loginService.Login(this.currentImageClean);
+
                     this.cursorActionProcessor.ResetActions();
                     this.activateSpeechAction.Reset();
                     this.speechProcessor.Finish();
                     this.cursorLoopProcessor.Finish();
+
+                    if (!this.shouldBlockPrecision)
+                        this.ResetPrecision();
                 }
             }
             else
@@ -298,25 +330,26 @@ namespace Processors
 
         private void DrawZone(ZoneEntity entity, Color color)
         {
-            entity.Image.Draw(entity.Zone, new Bgr(color), 2);
+            if (entity.Image != null)
+                entity.Image.Draw(entity.Zone, new Bgr(color), 10);
         }
 
         private void DrawRectangle(Image<Bgr, byte> image, Rectangle rectangle, Color color)
         {
-            image.Draw(rectangle, new Bgr(color), 2);
+            image.Draw(rectangle, new Bgr(color), 10);
         }
 
         private void DrawCircle(Image<Bgr, byte> image, Point point, Color color)
         {
             var circle = new CircleF();
             circle.Center = new PointF { X = point.X, Y = point.Y };
-            circle.Radius = 4;
-            image.Draw(circle, new Bgr(color), 5);
+            circle.Radius = 8;
+            image.Draw(circle, new Bgr(color), 15);
         }
 
         private void Show(Image<Bgr, byte> image, Face face)
         {
-            this.mainForm.ShowOriginalImage(image, face);
+            this.mainForm.ShowOriginalImage(image.Flip(FLIP.HORIZONTAL), face);
             this.trainBox.ShowOriginalImage(image, face);
         }
 
@@ -370,17 +403,31 @@ namespace Processors
         {
             var imageCopy = this.currentImageClean.Copy();
 
-            this.eyeDetector.DetectRightEye(currentDetectedFace);
-            this.eyeDetector.DetectLeftEye(currentDetectedFace);
-
-            if (this.currentDetectedFace.HasBothEyesOpen)
-                imageCopy.ROI = this.currentDetectedFace.LoginZone;
-            else
-                imageCopy.ROI = this.currentDetectedFace.Zone;
+            imageCopy.ROI = this.lastFrontalFace.LoginZone;
 
             return imageCopy;
         }
 
         public GesturesService gesturesService { get; set; }
+
+        internal void BlockPrecision(bool shouldBlock)
+        {
+            this.shouldBlockPrecision = shouldBlock;
+        }
+
+        internal void ResetPrecision()
+        {
+            this.eyeDetector.ResetPrecision();
+        }
+
+        internal bool GetGlassesConfiguration()
+        {
+            return this.eyeDetector.GetGlassesConfiguration();
+        }
+
+        internal bool GetBlockingConfiguration()
+        {
+            return this.shouldBlockPrecision;
+        }
     }
 }

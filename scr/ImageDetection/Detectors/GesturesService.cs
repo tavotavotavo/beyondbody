@@ -23,7 +23,7 @@ namespace Detectors
             this.loginService = loginService;
         }
 
-        public void Detect(Face face)
+        public Word Detect(Face face, Image<Bgr, byte> cleanImage)
         {
             var loginImagesPaths = new List<string>();
 
@@ -34,7 +34,7 @@ namespace Detectors
 
             if (!loginImagesPaths.Any())
             {
-                return;
+                return new Word(string.Empty);
             }
             else
             {
@@ -42,10 +42,16 @@ namespace Detectors
                 {
                     this.shouldReloadImages = false;
                 }
-                var source = face.Image.Copy();
-                source.ROI = face.Zone;
+                var source = cleanImage.Copy();
+                source.ROI = new Rectangle
+                {
+                    X = face.Zone.X,
+                    Y = face.Zone.Y,
+                    Width = face.Zone.Width + face.Zone.Width / 3,
+                    Height = face.Zone.Height + face.Zone.Height / 3
+                };
 
-                for (double scale = 1; scale > 0.4; scale = scale - 0.1)
+                for (double scale = 1.2; scale > 0.4; scale = scale - 0.1)
                 {
                     foreach (var loginPath in loginImagesPaths)
                     {
@@ -67,12 +73,14 @@ namespace Detectors
                             var splittedPath = newPath.Split('|');
                             if (face.Mouth.IsEmpty)
                                 face.Mouth = new Mouth();
-                            face.Mouth.Word = splittedPath[splittedPath.Length - 2];
-                            return;
+                            face.Mouth.Word = new Word(splittedPath[splittedPath.Length - 2]);
+                            return face.Mouth.Word;
                         }
                     }
                 }
             }
+
+            return new Word(string.Empty);
         }
 
         public void Register(string userName, IEnumerable<Gesture> gestures)
@@ -98,9 +106,11 @@ namespace Detectors
                 if (!Directory.Exists(imagesPath))
                     Directory.CreateDirectory(imagesPath);
 
+                var index = 0;
+
                 foreach (var gesture in gestures)
                 {
-                    var fileName = "image-" + gesture.Word.Value + DateTime.Now.ToString("-HH-mm-ss-ff-") + this.gesturesPattern;
+                    var fileName = "image-" + index.ToString() + "-" + gesture.Word.Value + DateTime.Now.ToString("-HH-mm-ss-ff-") + this.gesturesPattern;
 
                     gesture.Image.Save(fileName);
 
@@ -108,6 +118,8 @@ namespace Detectors
                         Directory.CreateDirectory(imagesPath + "\\" + gesture.Word.Value);
 
                     File.Move(basePath + "\\" + fileName, imagesPath + "\\" + gesture.Word.Value + "\\" + fileName);
+
+                    index++;
                 }
             }
             catch (Exception ex)

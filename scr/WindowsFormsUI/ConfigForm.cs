@@ -96,6 +96,19 @@ namespace WindowsFormsUI
             {
                 if (image != null)
                 {
+                    if (imageBox.Image != null)
+                    {
+                        var oldImages = this.gestures.Where(x => x.Image == image).ToList();
+
+                        if (oldImages != null)
+                        {
+                            foreach (var oldImage in oldImages)
+                            {
+                                this.gestures.Remove(oldImage);
+                            }
+                        }
+                    }
+
                     imageBox.Image = image.Resize(imageBox.Width, imageBox.Height, INTER.CV_INTER_LINEAR);
 
                     textBox.Text = textBox.Text.Trim();
@@ -141,32 +154,57 @@ namespace WindowsFormsUI
 
         private void DeleteGestures_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(this.textBoxUser.Text))
+            if (string.IsNullOrWhiteSpace(this.textBoxUser.Text))
             {
-                var result = MessageBox.Show("Esta seguro que desea eliminar todos los gestos del usuario " + this.textBoxUser.Text,
-                    "Eliminación de Gestos",
-                    MessageBoxButtons.YesNo);
+                this.textBoxUser.Text = "default";
+            }
 
-                if (result == DialogResult.Yes)
+            var result = MessageBox.Show("Esta seguro que desea eliminar todos los gestos del usuario " + this.textBoxUser.Text,
+                "Eliminación de Gestos",
+                MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                try
                 {
-                    try
+                    this.processor.WaitForActionAndExecute(() =>
                     {
-                        this.processor.WaitForActionAndExecute(() =>
-                        {
-                            this.gesturesService.DeleteGestures(this.textBoxUser.Text);
-                        });
-                        this.gestures.Clear();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
+                        this.gesturesService.DeleteGestures(this.textBoxUser.Text);
+                    });
+                    this.gestures.Clear();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
-            else
+        }
+
+        private void BlockPresicion_CheckedChanged(object sender, EventArgs e)
+        {
+            this.processor.BlockPrecision(this.checkBox2.Checked);
+        }
+
+        private void ResetPresicion_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void ResetPresicion_CheckedChanged(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            this.processor.WaitForActionAndExecute(() =>
             {
-                MessageBox.Show("Debe introducir un usuario");
-            }
+                this.processor.ResetPrecision();
+            });
+        }
+
+        private void ConfigForm_Load(object sender, EventArgs e)
+        {
+            this.checkBox1.Checked = this.processor.GetGlassesConfiguration();
+            this.checkBox2.Checked = this.processor.GetBlockingConfiguration();
         }
     }
 }

@@ -7,13 +7,13 @@ namespace Domain
 {
     public class Mouth : ZoneEntity
     {
-        public string Word { get; set; }
+        public Word Word { get; set; }
 
-        public bool IsMakingGesture { get { return !string.IsNullOrWhiteSpace(this.Word); } }
+        public bool IsMakingGesture { get { return !string.IsNullOrWhiteSpace(this.Word != null ? this.Word.Value : string.Empty); } }
 
         public void ClearGesture()
         {
-            this.Word = string.Empty;
+            this.Word = new Word(string.Empty);
         }
     }
 }

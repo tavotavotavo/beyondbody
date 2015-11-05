@@ -203,7 +203,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\On-ScreenKeyboardPortable.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Help\images\donation_button.png" />
     <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Help\images\favicon.ico" />

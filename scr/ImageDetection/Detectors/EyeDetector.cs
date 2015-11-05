@@ -10,13 +10,14 @@ namespace Detectors
 {
     public static class AppConfiguration
     {
-        public static bool HasGlasses { get { return true; } }
+        public static bool HasGlasses { get { return false; } }
     }
 
     public class EyeDetector : HaarCascadeDetector
     {
         private IList<Action> increasePrecisionActions;
         private int actionIndex;
+        private bool isConfiguredWithGlasses;
 
         public EyeDetector()
             : base()
@@ -40,6 +41,7 @@ namespace Detectors
 
         public void ConfigureWithoutGlasses()
         {
+            this.isConfiguredWithGlasses = false;
             this.actionIndex = 0;
             this.increasePrecisionActions.Clear();
             this.HaarCascadeFileNames.Clear();
@@ -83,6 +85,7 @@ namespace Detectors
 
         public void ConfigureWithGlasses()
         {
+            this.isConfiguredWithGlasses = true;
             this.actionIndex = 0;
             this.increasePrecisionActions.Clear();
             this.HaarCascadeFileNames.Clear();
@@ -245,6 +248,19 @@ namespace Detectors
         protected override string HaarCascadeFileName
         {
             get { throw new NotImplementedException(); }
+        }
+
+        public void ResetPrecision()
+        {
+            if (this.isConfiguredWithGlasses)
+                this.ConfigureWithGlasses();
+            else
+                this.ConfigureWithoutGlasses();
+        }
+
+        public bool GetGlassesConfiguration()
+        {
+            return this.isConfiguredWithGlasses;
         }
     }
 }

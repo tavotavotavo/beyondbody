@@ -4,6 +4,7 @@ using Domain;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Login;
+using MouseSimulation.Simulators;
 using ProcessingInterfaces;
 using Processors;
 using System;
@@ -26,18 +27,19 @@ namespace Processing.Processors
         private RightArrow rightArrow;
         private LeftArrow leftArrow;
         private TrainingBox trainBox;
+        private CursorSimulator cursorSimulator;
 
         public MainProcessor()
         {
-
             this.leftArrow = new LeftArrow();
             this.rightArrow = new RightArrow();
             this.loginService = new LoginService(this);
             this.gesturesService = new GesturesService(this.loginService);
             this.trainBox = new TrainingBox();
             this.mainForm = new FormMain(this, this.loginService, this.gesturesService, this.trainBox);
-            this.imageProcessor = new ImageProcessor(this.mainForm, this.loginService, this.gesturesService, this.trainBox);
-            this.ProcessImages();
+            this.cursorSimulator = new CursorSimulator();
+            this.imageProcessor = new ImageProcessor(this.mainForm, this.loginService, this.gesturesService, this.trainBox, this.cursorSimulator);
+            this.ActivateEventLooper();
             this.ShowForm();
         }
 
@@ -72,12 +74,18 @@ namespace Processing.Processors
 
         public void WithGlasses()
         {
-            this.WaitForActionAndExecute(() => { this.imageProcessor.WithGlasses(); });
+            this.WaitForActionAndExecute(() =>
+            {
+                this.imageProcessor.WithGlasses();
+            });
         }
 
         public void WithoutGlasses()
         {
-            this.WaitForActionAndExecute(() => { this.imageProcessor.WithoutGlasses(); });
+            this.WaitForActionAndExecute(() =>
+            {
+                this.imageProcessor.WithoutGlasses();
+            });
         }
 
         public Image<Bgr, byte> GetCurrentMouthImage()
@@ -127,6 +135,8 @@ namespace Processing.Processors
 
         public void ActivateTaskLooper()
         {
+            this.cursorSimulator.ActivateTaskLooperIncreasement();
+
             if (this.IsEventLooperActivated)
             {
                 this.IsEventLooperActivated = false;
@@ -138,6 +148,8 @@ namespace Processing.Processors
 
         public void ActivateEventLooper()
         {
+            this.cursorSimulator.ActivateEventLooperIncreasement();
+
             if (!this.IsEventLooperActivated)
             {
                 this.IsEventLooperActivated = true;
@@ -165,6 +177,30 @@ namespace Processing.Processors
         public void ShowLeftArrow()
         {
             //this.rightArrow.Show();
+        }
+
+
+        public void BlockPrecision(bool shouldBlock)
+        {
+            this.imageProcessor.BlockPrecision(shouldBlock);
+        }
+
+
+        public void ResetPrecision()
+        {
+            this.imageProcessor.ResetPrecision();
+        }
+
+
+        public bool GetGlassesConfiguration()
+        {
+            return this.imageProcessor.GetGlassesConfiguration();
+        }
+
+
+        public bool GetBlockingConfiguration()
+        {
+            return this.imageProcessor.GetBlockingConfiguration();
         }
     }
 }

@@ -1,9 +1,0 @@
-C:\Users\aguia_000\My Projects\BeyondBodyApp\SpeechDetection\bin\Release\SpeechDetection.dll
-C:\Users\aguia_000\My Projects\BeyondBodyApp\SpeechDetection\bin\Release\SpeechDetection.pdb
-C:\Users\aguia_000\My Projects\BeyondBodyApp\SpeechDetection\bin\Release\Domain.dll
-C:\Users\aguia_000\My Projects\BeyondBodyApp\SpeechDetection\bin\Release\Domain.pdb
-C:\Users\aguia_000\My Projects\BeyondBodyApp\SpeechDetection\obj\Release\SpeechDetection.csprojResolveAssemblyReference.cache
-C:\Users\aguia_000\My Projects\BeyondBodyApp\SpeechDetection\obj\Release\Interop.SpeechLib.dll
-C:\Users\aguia_000\My Projects\BeyondBodyApp\SpeechDetection\obj\Release\SpeechDetection.csproj.ResolveComReference.cache
-C:\Users\aguia_000\My Projects\BeyondBodyApp\SpeechDetection\obj\Release\SpeechDetection.dll
-C:\Users\aguia_000\My Projects\BeyondBodyApp\SpeechDetection\obj\Release\SpeechDetection.pdb

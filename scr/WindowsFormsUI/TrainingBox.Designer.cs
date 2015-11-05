@@ -35,9 +35,9 @@
             // 
             // OriginalImageViewer
             // 
-            this.OriginalImageViewer.Location = new System.Drawing.Point(12, 12);
+            this.OriginalImageViewer.Location = new System.Drawing.Point(-2, -2);
             this.OriginalImageViewer.Name = "OriginalImageViewer";
-            this.OriginalImageViewer.Size = new System.Drawing.Size(76, 74);
+            this.OriginalImageViewer.Size = new System.Drawing.Size(153, 103);
             this.OriginalImageViewer.TabIndex = 3;
             this.OriginalImageViewer.TabStop = false;
             // 
@@ -45,10 +45,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(100, 98);
+            this.BackgroundImage = global::WindowsFormsUI.Properties.Resources.BB;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(149, 99);
             this.Controls.Add(this.OriginalImageViewer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "TrainingBox";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TrainingBox";
             this.TopMost = true;

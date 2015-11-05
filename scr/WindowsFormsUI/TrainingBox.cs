@@ -19,10 +19,12 @@ namespace WindowsFormsUI
         {
             var imageToShow = drawedImage.Copy();
 
-            if (!face.IsEmpty)
-            {
-                imageToShow.ROI = face.Zone;
-            }
+            //if (!face.IsEmpty)
+            //{
+            //    imageToShow.ROI = face.Zone;
+            //}
+
+            imageToShow = imageToShow.Flip(FLIP.HORIZONTAL);
 
             this.OriginalImageViewer.Image = imageToShow.Resize(this.OriginalImageViewer.Width, this.OriginalImageViewer.Height, INTER.CV_INTER_LINEAR);
 

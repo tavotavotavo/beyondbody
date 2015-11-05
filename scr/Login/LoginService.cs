@@ -146,10 +146,10 @@ namespace Login
             }
         }
 
-        public void DeleteUsers()
+        public void DeleteUsers(string userName)
         {
             var imagesPath = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase) +
-                       "\\Users").LocalPath;
+                       "\\Users\\" + userName).LocalPath;
 
             if (Directory.Exists(imagesPath))
                 Directory.Delete(imagesPath, true);

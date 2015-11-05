@@ -196,9 +196,29 @@ namespace Domain
         {
             get
             {
-                var x = this.RightEye.Center.X;
-                var y = this.RightEye.Zone.Y > this.LeftEye.Zone.Y ? this.LeftEye.Zone.Y : this.RightEye.Zone.Y;
-                var width = this.LeftEye.Center.X - x;
+                var y = this.Zone.Y + this.Zone.Height / 8;
+                var x = this.MouthZone.X;
+                var width = this.MouthZone.Width;
+
+                if (this.HasBothEyesOpen)
+                {
+                    y = this.RightEye.Zone.Y > this.LeftEye.Zone.Y ? this.LeftEye.Zone.Y : this.RightEye.Zone.Y;
+                    x = this.RightEye.Center.X;
+                    width = this.LeftEye.Center.X - x;
+                }
+                else if (this.IsBlinkingLeftEye)
+                {
+                    y = this.RightEye.Zone.Y;
+                    x = this.RightEye.Center.X;
+                    width = (this.Center.X - this.RightEye.Center.X) * 2;
+                }
+                else if (this.IsBlinkingRightEye)
+                {
+                    y = this.LeftEye.Zone.Y;
+                    x = this.LeftEye.Center.X - ((this.LeftEye.Center.X - this.Center.X) * 2);
+                    width = (this.LeftEye.Center.X - this.Center.X) * 2;
+                }
+
                 var height = this.MouthZone.Y + this.MouthZone.Height - y;
 
                 return new Rectangle { X = x, Y = y, Width = width, Height = height };
@@ -214,28 +234,34 @@ namespace Domain
                 var distanceX = 0;
 
                 //Lo comento porque nunca tiene los ojos cargados
-                //if (this.IsFrontal)
-                //{
-                //    if (this.HasBothEyesOpen)
-                //    {
-                //        if (this.HasEyesCentered)
-                //        {
-                //            distanceX = (this.LeftEye.Center.X - this.RightEye.Center.X);
-                //        }
-                //        else
-                //        {
-                //            distanceX = (this.LeftEye.Center.X - this.RightEye.Center.X) / 3;
-                //        }
-                //    }
-                //    else
-                //    {
-                //        distanceX = this.Zone.Width / 5;
-                //    }
-                //}
-                //else
-                //{
-                distanceX = this.Zone.Width / 5;
-                //}
+                if (this.IsFrontal)
+                {
+                    if (this.HasBothEyesOpen)
+                    {
+                        if (this.HasEyesCentered)
+                        {
+                            distanceX = (int)((this.LeftEye.Center.X - this.RightEye.Center.X) / 1.5);
+                        }
+                        else
+                        {
+                            distanceX = (int)((this.LeftEye.Center.X - this.RightEye.Center.X) / 1.5);
+                        }
+                    }
+                    else
+                    {
+                        if (this.IsBlinking)
+                            if (this.HasEyesCentered)
+                                distanceX = this.Zone.Width / 3;
+                            else
+                                distanceX = this.Zone.Width / 7;
+                        else
+                            distanceX = this.Zone.Width / 5;
+                    }
+                }
+                else
+                {
+                    distanceX = this.Zone.Width / 7;
+                }
 
                 var distanceY = middleY;
                 var newRectangle = new Rectangle()
@@ -289,5 +315,52 @@ namespace Domain
                     !this.LeftEye.Zone.HasPoint(this.RightEye.Center));
             }
         }
+
+        public void Convert()
+        {
+            if (this.HasBothEyesOpen && this.IsFrontal)
+            {
+                if (this.LeftEye.Center.Y < this.RightEye.Zone.Y)
+                    this.IsLeftRotated = true;
+                if (this.RightEye.Center.Y < this.LeftEye.Zone.Y)
+                    this.IsRightRotated = true;
+
+                if (this.IsLeftRotated || this.IsRightRotated)
+                {
+                    this.IsFrontal = false;
+                }
+            }
+        }
+
+        public bool IsZoneOutOfControl
+        {
+            get
+            {
+                if (this.ControlZone.IsEmpty)
+                    return false;
+
+                return (this.Zone.X > this.ControlZone.X + this.ControlZone.Width ||
+                    this.Zone.X + this.Zone.Width < this.ControlZone.X) ||
+                    (this.Center.X > this.ControlZone.Center().X + this.ControlZone.Width + this.ControlZone.Width / 3 ||
+                    this.Center.X < this.ControlZone.Center().X - this.ControlZone.Width - this.ControlZone.Width / 3);
+            }
+        }
+
+        public bool IsOuttaControl { get; set; }
+
+        public void FlipZoneHorizontally()
+        {
+            var x = this.Image.Width - this.Zone.X - this.Zone.Width;
+
+            this.Zone = new Rectangle 
+            { 
+                X = x,
+                Y = this.Zone.Y,
+                Height = this.Zone.Height,
+                Width = this.Zone.Width
+            };
+        }
+
+        public Rectangle ReplacedZone { get; set; }
     }
 }

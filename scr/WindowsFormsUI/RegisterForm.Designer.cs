@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegisterForm));
             this.helpButton2 = new System.Windows.Forms.Button();
             this.takePhotosButton = new System.Windows.Forms.Button();
             this.nameTextBox = new System.Windows.Forms.TextBox();
@@ -78,6 +77,8 @@
             this.label20 = new System.Windows.Forms.Label();
             this.ButtonDeletePhotos = new System.Windows.Forms.Button();
             this.LabelUserName = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).BeginInit();
@@ -112,7 +113,7 @@
             // 
             // takePhotosButton
             // 
-            this.takePhotosButton.Location = new System.Drawing.Point(266, 65);
+            this.takePhotosButton.Location = new System.Drawing.Point(266, 116);
             this.takePhotosButton.Name = "takePhotosButton";
             this.takePhotosButton.Size = new System.Drawing.Size(100, 23);
             this.takePhotosButton.TabIndex = 8;
@@ -124,7 +125,7 @@
             // 
             this.nameTextBox.Location = new System.Drawing.Point(122, 12);
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(244, 20);
+            this.nameTextBox.Size = new System.Drawing.Size(77, 20);
             this.nameTextBox.TabIndex = 0;
             // 
             // completeRegistrationButton
@@ -410,15 +411,15 @@
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(118, 66);
+            this.textBox1.Location = new System.Drawing.Point(122, 88);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
+            this.textBox1.Size = new System.Drawing.Size(77, 20);
             this.textBox1.TabIndex = 10;
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(12, 69);
+            this.checkBox1.Location = new System.Drawing.Point(7, 91);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(109, 17);
             this.checkBox1.TabIndex = 12;
@@ -518,7 +519,7 @@
             // 
             // ButtonDeletePhotos
             // 
-            this.ButtonDeletePhotos.Location = new System.Drawing.Point(266, 94);
+            this.ButtonDeletePhotos.Location = new System.Drawing.Point(266, 87);
             this.ButtonDeletePhotos.Name = "ButtonDeletePhotos";
             this.ButtonDeletePhotos.Size = new System.Drawing.Size(100, 23);
             this.ButtonDeletePhotos.TabIndex = 8;
@@ -535,11 +536,33 @@
             this.LabelUserName.TabIndex = 15;
             this.LabelUserName.Text = "Nombre de Usuario:";
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(266, 39);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(100, 23);
+            this.button3.TabIndex = 16;
+            this.button3.Text = "Borrar Todos";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.RemoveUsersButton_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(266, 10);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "Borrar Usuario";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.RemoveUserButton_Click);
+            // 
             // RegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(378, 553);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.LabelUserName);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.label20);
@@ -588,7 +611,6 @@
             this.Controls.Add(this.imageBox2);
             this.Controls.Add(this.imageBox1);
             this.Controls.Add(this.imageBox0);
-            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RegisterForm";
             this.ShowInTaskbar = false;
             this.Text = "RegisterForm";
@@ -667,5 +689,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button ButtonDeletePhotos;
         private System.Windows.Forms.Label LabelUserName;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button1;
     }
 }

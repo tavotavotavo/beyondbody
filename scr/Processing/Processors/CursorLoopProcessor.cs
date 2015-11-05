@@ -16,9 +16,9 @@ namespace Processing.Processors
         private uint topCounter;
         protected Stopwatch timer;
 
-        public CursorLoopProcessor()
+        public CursorLoopProcessor(CursorSimulator mouseSimulator)
         {
-            this.mouseSimulator = new CursorSimulator();
+            this.mouseSimulator = mouseSimulator;
             this.timer = new Stopwatch();
             this.pixelsToAdd = 1;
         }
@@ -65,142 +65,56 @@ namespace Processing.Processors
                     this.leftCounter += pixelsToAdd;
                     this.mouseSimulator.MoveCursorToLeft(leftCounter);
 
-                    if (this.rightCounter > 0)
-                    {
-                        this.rightCounter -= pixelsToAdd;
-                        //this.rightCounter -= pixelsToAdd;
-                        if (this.rightCounter < 0)
-                            this.rightCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToRight(rightCounter);
-                    }
-
-                    if (this.bottomCounter > 0)
-                    {
-                        this.bottomCounter -= pixelsToAdd;
-                        //this.bottomCounter -= pixelsToAdd;
-                        if (this.bottomCounter < 0)
-                            this.bottomCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToBottom(bottomCounter);
-                    }
-
-                    if (this.topCounter > 0)
-                    {
-                        this.topCounter -= pixelsToAdd;
-                        //this.topCounter -= pixelsToAdd;
-                        if (this.topCounter < 0)
-                            this.topCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToTop(topCounter);
-                    }
+                    this.rightCounter = this.VerifyNoUsingCounter((int)this.rightCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToRight);
+                    this.bottomCounter = this.VerifyNoUsingCounter((int)this.bottomCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToBottom);
+                    this.topCounter = this.VerifyNoUsingCounter((int)this.topCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToTop);
                 }
                 if (this.ShouldIncrementRightCounter)
                 {
                     this.rightCounter += pixelsToAdd;
                     this.mouseSimulator.MoveCursorToRight(rightCounter);
 
-                    if (this.leftCounter > 0)
-                    {
-                        this.leftCounter -= pixelsToAdd;
-                        //this.leftCounter -= pixelsToAdd;
-                        if (this.leftCounter < 0)
-                            this.leftCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToLeft(leftCounter);
-                    }
-
-                    if (this.bottomCounter > 0)
-                    {
-                        this.bottomCounter -= pixelsToAdd;
-                        //this.bottomCounter -= pixelsToAdd;
-                        if (this.bottomCounter < 0)
-                            this.bottomCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToBottom(bottomCounter);
-                    }
-
-                    if (this.topCounter > 0)
-                    {
-                        this.topCounter -= pixelsToAdd;
-                        //this.topCounter -= pixelsToAdd;
-                        if (this.topCounter < 0)
-                            this.topCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToTop(topCounter);
-                    }
+                    this.leftCounter = this.VerifyNoUsingCounter((int)this.leftCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToLeft);
+                    this.bottomCounter = this.VerifyNoUsingCounter((int)this.bottomCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToBottom);
+                    this.topCounter = this.VerifyNoUsingCounter((int)this.topCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToTop);
+                 
                 }
                 if (this.ShouldIncrementBottomCounter)
                 {
                     this.bottomCounter += pixelsToAdd;
                     this.mouseSimulator.MoveCursorToBottom(bottomCounter);
 
-                    if (this.leftCounter > 0)
-                    {
-                        this.leftCounter -= pixelsToAdd;
-                        //this.leftCounter -= pixelsToAdd;
-                        if (this.leftCounter < 0)
-                            this.leftCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToLeft(leftCounter);
-                    }
-
-                    if (this.rightCounter > 0)
-                    {
-                        this.rightCounter -= pixelsToAdd;
-                        //this.rightCounter -= pixelsToAdd;
-                        if (this.rightCounter < 0)
-                            this.rightCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToRight(rightCounter);
-                    }
-
-                    if (this.topCounter > 0)
-                    {
-                        this.topCounter -= pixelsToAdd;
-                        //this.topCounter -= pixelsToAdd;
-                        if (this.topCounter < 0)
-                            this.topCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToTop(topCounter);
-                    }
+                    this.leftCounter = this.VerifyNoUsingCounter((int)this.leftCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToLeft);
+                    this.rightCounter = this.VerifyNoUsingCounter((int)this.rightCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToRight);
+                    this.topCounter = this.VerifyNoUsingCounter((int)this.topCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToTop);
+        
                 }
                 if (this.ShouldIncrementTopCounter)
                 {
                     this.topCounter += pixelsToAdd;
                     this.mouseSimulator.MoveCursorToTop(topCounter);
 
-                    if (this.leftCounter > 0)
-                    {
-                        this.leftCounter -= pixelsToAdd;
-                        //this.leftCounter -= pixelsToAdd;
-                        if (this.leftCounter < 0)
-                            this.leftCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToLeft(leftCounter);
-                    }
-
-                    if (this.rightCounter > 0)
-                    {
-                        this.rightCounter -= pixelsToAdd;
-                        //this.rightCounter -= pixelsToAdd;
-                        if (this.rightCounter < 0)
-                            this.rightCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToRight(rightCounter);
-                    }
-
-                    if (this.bottomCounter > 0)
-                    {
-                        this.bottomCounter -= pixelsToAdd;
-                        //this.bottomCounter -= pixelsToAdd;
-                        if (this.bottomCounter < 0)
-                            this.bottomCounter = 0;
-                        else
-                            this.mouseSimulator.MoveCursorToBottom(bottomCounter);
-                    }
+                    this.leftCounter = this.VerifyNoUsingCounter((int)this.leftCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToLeft);
+                    this.rightCounter = this.VerifyNoUsingCounter((int)this.rightCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToRight);
+                    this.bottomCounter = this.VerifyNoUsingCounter((int)this.bottomCounter, pixelsToAdd, this.mouseSimulator.MoveCursorToBottom);
+        
                 }
             }
+        }
+
+        private uint VerifyNoUsingCounter(int counter, uint pixelsToAdd, Action<uint> action)
+        {
+            if (counter > 0)
+            {
+                counter -= (int)pixelsToAdd * 2;
+                //this.rightCounter -= pixelsToAdd;
+                if (counter < 0)
+                    counter = 0;
+                else
+                    action((uint)counter);
+            }
+
+            return (uint)counter;
         }
 
         internal bool IsStarted()
@@ -239,6 +153,7 @@ namespace Processing.Processors
             this.topCounter = 0;
             this.bottomCounter = 0;
             this.generalCounter = 0;
+            this.timer.Restart();
 
             this.ResetFlags();
         }

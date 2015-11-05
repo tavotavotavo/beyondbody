@@ -66,6 +66,8 @@ namespace Common.PriorityAlgorithm
             {
                 this.SwapPriority(1, priorityItem);
             }
+
+            this.lastReturned = null;
         }
 
         private void SwapPriority(uint priority, PriorityItem<T> itemWithPriority)

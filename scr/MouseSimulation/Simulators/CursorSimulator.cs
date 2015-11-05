@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace MouseSimulation.Simulators
 {
     public class CursorSimulator
     {
+        private double acceleration;
+        private double divisor;
+
+        public CursorSimulator()
+        {
+            this.ActivateEventLooperIncreasement();
+        }
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
 
@@ -32,7 +39,7 @@ namespace MouseSimulation.Simulators
 
         private void DoMouseRightClick()
         {
-            mouse_event((uint)(MouseEventFlags.RIGHTDOWN | MouseEventFlags.RIGHTUP | MouseEventFlags.ABSOLUTE), 
+            mouse_event((uint)(MouseEventFlags.RIGHTDOWN | MouseEventFlags.RIGHTUP | MouseEventFlags.ABSOLUTE),
                 (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, (uint)UIntPtr.Zero);
         }
 
@@ -78,13 +85,13 @@ namespace MouseSimulation.Simulators
 
         private int ConvertDistance(int distance)
         {
-            if (distance < 40)
-                return (int)Math.Pow(distance / 4, 1.1);
+            if (distance < 50)
+                return (int)Math.Pow(distance / this.divisor, this.acceleration);
 
-            if (distance < 400)
-                return (int)Math.Pow(distance / 4, 1.2);
+            if (distance < 300)
+                return (int)Math.Pow(distance / this.divisor, this.acceleration + 0.1);
 
-            return (int)Math.Pow(distance / 4, 1.3);
+            return (int)Math.Pow(distance / this.divisor, this.acceleration + 0.2);
         }
 
         private void MoveCursorToX(int distance)
@@ -95,6 +102,19 @@ namespace MouseSimulation.Simulators
         private void MoveCursorToY(int distance)
         {
             Cursor.Position = new Point(Cursor.Position.X, Cursor.Position.Y + distance);
+        }
+
+        public void ActivateTaskLooperIncreasement()
+        {
+            //this.acceleration = 0.4;
+            //this.acceleration = 1.1;
+            //this.divisor = 7;
+        }
+
+        public void ActivateEventLooperIncreasement()
+        {
+            this.acceleration = 1.1;
+            this.divisor = 6;
         }
     }
 }

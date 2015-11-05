@@ -82,7 +82,7 @@ namespace BeyondBody
 
         private void registerButton_Click(object sender, EventArgs e)
         {
-            RegisterForm registerForm = new RegisterForm(this.processor);
+            RegisterForm registerForm = new RegisterForm(this.processor, this.loginService);
 
             registerForm.ShowDialog();
         }
@@ -126,12 +126,13 @@ namespace BeyondBody
         private void FormMain_Shown(object sender, EventArgs e)
         {
             notifyIcon.Visible = true;
+            this.trainBox.Show();
             this.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.processor.ActivateTaskLooper();
+            this.processor.ActivateEventLooper();
             this.Visible = false;
         }
 
@@ -160,7 +161,7 @@ namespace BeyondBody
             {
                 this.processor.WaitForActionAndExecute(() =>
                 {
-                    this.loginService.DeleteUsers();
+                    this.loginService.DeleteUsers(string.Empty);
                 });
             }
         }
@@ -176,11 +177,11 @@ namespace BeyondBody
 
             if (this.checkBox1.Checked)
             {
-                this.trainBox.Show();
+                this.trainBox.Opacity = 100;
             }
             else
             {
-                this.trainBox.Hide();
+                this.trainBox.Opacity = 0;
             }
         }
 
