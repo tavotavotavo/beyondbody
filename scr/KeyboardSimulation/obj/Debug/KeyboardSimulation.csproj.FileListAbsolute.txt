@@ -1,0 +1,10 @@
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\bin\Debug\KeyboardSimulation.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\bin\Debug\KeyboardSimulation.pdb
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\bin\Debug\Domain.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\bin\Debug\InputSimulator.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\bin\Debug\Domain.pdb
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\bin\Debug\InputSimulator.pdb
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\bin\Debug\InputSimulator.xml
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\obj\Debug\KeyboardSimulation.csprojResolveAssemblyReference.cache
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\obj\Debug\KeyboardSimulation.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\KeyboardSimulation\obj\Debug\KeyboardSimulation.pdb

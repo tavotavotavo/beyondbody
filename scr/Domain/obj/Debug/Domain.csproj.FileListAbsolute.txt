@@ -1,0 +1,13 @@
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Domain.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Domain.pdb
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Emgu.CV.DebuggerVisualizers.VS2010.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Emgu.CV.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Emgu.CV.GPU.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Emgu.CV.ML.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Emgu.CV.OCR.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Emgu.CV.Stitching.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Emgu.CV.UI.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\bin\Debug\Emgu.Util.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\obj\Debug\Domain.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\Domain\obj\Debug\Domain.pdb

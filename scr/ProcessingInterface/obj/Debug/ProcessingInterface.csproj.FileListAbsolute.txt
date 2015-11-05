@@ -1,0 +1,5 @@
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\ProcessingInterface\bin\Debug\ProcessingInterface.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\ProcessingInterface\bin\Debug\ProcessingInterface.pdb
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\ProcessingInterface\obj\Debug\ProcessingInterface.csprojResolveAssemblyReference.cache
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\ProcessingInterface\obj\Debug\ProcessingInterface.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBody\trunk\ProcessingInterface\obj\Debug\ProcessingInterface.pdb

@@ -1,0 +1,21 @@
+ojo chico:
+eyeZone = 90
+rightCorner = 17
+eye = 38
+
+esquina de un ojo = 0,189% del tamaño de la zona del ojo
+esquina de un ojo = 0,45% del tamaño del ojo
+
+ojo = 42% de la zona
+
+pupil = 29 = 
+ 
+ojo grande:
+
+eyeZone = 443
+eye = 211
+
+rightCorner = 443 x 0.189 = 83px
+ojo = 47% de la zona
+rightCorner = 39% del ojo
+pupil = 63% del ojo

@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{406C8158-B52F-4B84-9E5F-AE2EAAC05B7D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Processing</RootNamespace>
+    <AssemblyName>Processing</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Emgu.CV">
+      <HintPath>..\Libraries\emgucv-windows-x86 2.4.0.1717\Emgu.CV.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.DebuggerVisualizers.VS2010">
+      <HintPath>..\Libraries\emgucv-windows-x86 2.4.0.1717\Emgu.CV.DebuggerVisualizers.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.GPU">
+      <HintPath>..\Libraries\emgucv-windows-x86 2.4.0.1717\Emgu.CV.GPU.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.ML">
+      <HintPath>..\Libraries\emgucv-windows-x86 2.4.0.1717\Emgu.CV.ML.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.OCR">
+      <HintPath>..\Libraries\emgucv-windows-x86 2.4.0.1717\Emgu.CV.OCR.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.Stitching">
+      <HintPath>..\Libraries\emgucv-windows-x86 2.4.0.1717\Emgu.CV.Stitching.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI">
+      <HintPath>..\Libraries\emgucv-windows-x86 2.4.0.1717\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.Util">
+      <HintPath>..\Libraries\emgucv-windows-x86 2.4.0.1717\Emgu.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actions\ActivateSpeechAction.cs" />
+    <Compile Include="Actions\BaseAction.cs" />
+    <Compile Include="Actions\KeyboardAction.cs" />
+    <Compile Include="Actions\LeftDoubleClickAction.cs" />
+    <Compile Include="Actions\LeftClickAction.cs" />
+    <Compile Include="Actions\CursorAction.cs" />
+    <Compile Include="Actions\RigthClickAction.cs" />
+    <Compile Include="Processors\CursorActionProcessor.cs" />
+    <Compile Include="Processors\ImageProcessor.cs" />
+    <Compile Include="Processors\MainProcessor.cs" />
+    <Compile Include="Processors\CursorLoopProcessor.cs" />
+    <Compile Include="Processors\SpeechProcessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\AboutToActivateSpeechState.cs" />
+    <Compile Include="States\AboutToRightClickState.cs" />
+    <Compile Include="States\AboutToLeftClickState.cs" />
+    <Compile Include="States\AboutToLeftDoubleClickState.cs" />
+    <Compile Include="States\AboutToClickState.cs" />
+    <Compile Include="States\InitialActivateSpeechState.cs" />
+    <Compile Include="States\ShouldLeftDoubleClickState.cs" />
+    <Compile Include="States\InitialClickState.cs" />
+    <Compile Include="States\InitialLeftDoubleClickState.cs" />
+    <Compile Include="States\NotAboutToClickState.cs" />
+    <Compile Include="States\NotAboutToActivateSpeechState.cs" />
+    <Compile Include="States\ShouldClickState.cs" />
+    <Compile Include="States\FaceState.cs" />
+    <Compile Include="States\ShouldActivateSpeechState.cs" />
+    <Compile Include="States\State.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{200126cc-74e5-44e5-bb88-a78ee2f67fc9}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageDetection\ImageDetection.csproj">
+      <Project>{c912cf78-e2cf-4079-918b-d93b17969923}</Project>
+      <Name>ImageDetection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KeyboardSimulation\KeyboardSimulation.csproj">
+      <Project>{adbdf504-ad98-4808-9187-d62c132d9315}</Project>
+      <Name>KeyboardSimulation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Login\Login.csproj">
+      <Project>{9ed83aad-27a8-454d-a786-446f48ced07c}</Project>
+      <Name>Login</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MouseSimulation\MouseSimulation.csproj">
+      <Project>{3d316501-529c-4639-ae0f-27c14a6fe779}</Project>
+      <Name>MouseSimulation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProcessingInterface\ProcessingInterface.csproj">
+      <Project>{c21a3772-6b4a-44ff-a720-6c3bddc52766}</Project>
+      <Name>ProcessingInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpeechDetection\SpeechDetection.csproj">
+      <Project>{ee089eed-3bda-4678-9e6d-073431a0c395}</Project>
+      <Name>SpeechDetection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsFormsUI\WindowsFormsUI.csproj">
+      <Project>{c6a3aae7-87be-459a-8e69-bc66eff45b1c}</Project>
+      <Name>WindowsFormsUI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ThirdPartyPrograms\osk.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
