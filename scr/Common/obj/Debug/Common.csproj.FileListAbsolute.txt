@@ -1,0 +1,5 @@
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\Common\bin\Debug\Common.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\Common\bin\Debug\Common.pdb
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\Common\obj\Debug\Common.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\Common\obj\Debug\Common.pdb

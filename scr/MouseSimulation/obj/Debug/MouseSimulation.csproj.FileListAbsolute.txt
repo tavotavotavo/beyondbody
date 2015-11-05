@@ -1,0 +1,5 @@
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\MouseSimulation\bin\Debug\MouseSimulation.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\MouseSimulation\bin\Debug\MouseSimulation.pdb
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\MouseSimulation\obj\Debug\MouseSimulation.csprojResolveAssemblyReference.cache
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\MouseSimulation\obj\Debug\MouseSimulation.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\MouseSimulation\obj\Debug\MouseSimulation.pdb

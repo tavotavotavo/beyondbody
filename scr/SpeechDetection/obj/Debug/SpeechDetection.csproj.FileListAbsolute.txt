@@ -1,0 +1,14 @@
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\bin\Debug\SpeechDetection.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\bin\Debug\SpeechDetection.pdb
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\bin\Debug\Domain.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\bin\Debug\KeyboardSimulation.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\bin\Debug\InputSimulator.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\bin\Debug\Domain.pdb
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\bin\Debug\KeyboardSimulation.pdb
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\bin\Debug\InputSimulator.pdb
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\bin\Debug\InputSimulator.xml
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\obj\Debug\SpeechDetection.csprojResolveAssemblyReference.cache
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\obj\Debug\Interop.SpeechLib.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\obj\Debug\SpeechDetection.csproj.ResolveComReference.cache
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\obj\Debug\SpeechDetection.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\SpeechDetection\obj\Debug\SpeechDetection.pdb

@@ -1,0 +1,15 @@
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\ProcessingInterface.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\ProcessingInterface.pdb
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Domain.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Emgu.CV.DebuggerVisualizers.VS2010.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Emgu.CV.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Emgu.CV.GPU.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Emgu.CV.ML.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Emgu.CV.OCR.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Emgu.CV.Stitching.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Emgu.CV.UI.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Emgu.Util.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\bin\Debug\Domain.pdb
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\obj\Debug\ProcessingInterface.csprojResolveAssemblyReference.cache
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\obj\Debug\ProcessingInterface.dll
+C:\Users\tavo.SyT5\My Projects\beyondbody\beyondbody\scr\ProcessingInterface\obj\Debug\ProcessingInterface.pdb
