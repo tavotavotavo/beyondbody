@@ -24,14 +24,18 @@ namespace Processing.States
                 else
                 {
                     //Con este estado deberia activar la funcionalidad de dictado
-                    this.action.SetState<ShouldActivateSpeechState>();
+                    if (!face.IsFake)
+                        this.action.SetState<ShouldActivateSpeechState>();
+                    else
+                        this.action.SetState<NotAboutToActivateSpeechState>();
+
                     this.ResetTimer();
                 }
             }
             else
             {
-                this.ResetTimer();
-                this.action.SetState<NotAboutToActivateSpeechState>();
+                this.action.SetState<AboutToAbortSpeechState>();
+                this.action.GetState<AboutToAbortSpeechState>().StartTimer();
             }
         }
     }

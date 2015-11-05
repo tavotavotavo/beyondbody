@@ -10,24 +10,35 @@ namespace Processing.States
         {
         }
 
-        protected override void SetHasBothEyesOpenState()
+        protected override void BothEyesOpenState()
         {
             this.action.SetState<ShouldRightClickState>();
         }
 
-        protected override void SetIsBlinkingEyeState()
+        protected override void IsBlinkingState()
         {
             this.action.SetState<AboutToRightClickState>();
         }
 
-        protected override bool IsBlinkingEye(Face face)
+        protected override bool IsBlinking(Face face)
         {
             return face.IsBlinkingRightEye;
         }
 
-        protected override void SetAbortClickingState()
+        protected override void AbortClick()
         {
             this.action.SetState<NotAboutToRightClickState>();
+        }
+
+        protected override AboutToAbortClickState AboutToAbort(int milliseconds)
+        {
+            this.action.SetState<AboutToAbortRightClickState>();
+            var newState = this.action.GetState<AboutToAbortRightClickState>();
+
+            newState.StartTimer();
+            newState.MaxErrorMilliseconds = milliseconds;
+
+            return newState;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Processing.States
 
         internal override void Next(Face face)
         {
-            if (this.timer.ElapsedMilliseconds > 500)
+            if (this.timer.ElapsedMilliseconds > 1500)
             {
                 this.timer.Reset();
                 this.action.SetState<NotAboutToLeftClickState>();

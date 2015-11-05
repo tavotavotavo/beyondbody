@@ -1,0 +1,5 @@
+C:\Users\aguia_000\My Projects\BeyondBodyApp\MouseSimulation\bin\Release\MouseSimulation.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\MouseSimulation\bin\Release\MouseSimulation.pdb
+C:\Users\aguia_000\My Projects\BeyondBodyApp\MouseSimulation\obj\Release\MouseSimulation.csprojResolveAssemblyReference.cache
+C:\Users\aguia_000\My Projects\BeyondBodyApp\MouseSimulation\obj\Release\MouseSimulation.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\MouseSimulation\obj\Release\MouseSimulation.pdb

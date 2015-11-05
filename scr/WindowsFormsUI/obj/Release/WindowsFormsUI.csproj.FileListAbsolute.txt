@@ -1,0 +1,17 @@
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\WindowsFormsUI.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\WindowsFormsUI.pdb
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\Emgu.CV.DebuggerVisualizers.VS2010.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\Emgu.CV.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\Emgu.CV.GPU.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\Emgu.CV.ML.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\Emgu.CV.OCR.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\Emgu.CV.Stitching.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\Emgu.CV.UI.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\Emgu.Util.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\ProcessingInterface.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\bin\Release\ProcessingInterface.pdb
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\obj\Release\WindowsFormsUI.csprojResolveAssemblyReference.cache
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\obj\Release\BeyondBody.FormMain.resources
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\obj\Release\WindowsFormsUI.csproj.GenerateResource.Cache
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\obj\Release\WindowsFormsUI.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\WindowsFormsUI\obj\Release\WindowsFormsUI.pdb

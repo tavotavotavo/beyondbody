@@ -1,0 +1,10 @@
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\bin\Release\KeyboardSimulation.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\bin\Release\KeyboardSimulation.pdb
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\bin\Release\Domain.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\bin\Release\InputSimulator.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\bin\Release\Domain.pdb
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\bin\Release\InputSimulator.pdb
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\bin\Release\InputSimulator.xml
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\obj\Release\KeyboardSimulation.csprojResolveAssemblyReference.cache
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\obj\Release\KeyboardSimulation.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\KeyboardSimulation\obj\Release\KeyboardSimulation.pdb

@@ -9,16 +9,13 @@ namespace Processing.Actions
     internal abstract class CursorAction<TState> : BaseAction<TState, Face>
         where TState : FaceState
     {
-        private Action action;
-
         public CursorAction(Action action)
+            : base(action)
         {
-            this.action = action;
         }
-        
-        internal void Execute()
+        public CursorAction()
+            : base()
         {
-            this.action.Invoke();
         }
     }
 }

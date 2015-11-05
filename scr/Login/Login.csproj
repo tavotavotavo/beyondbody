@@ -74,6 +74,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,7 +83,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LoginService.cs" />
+    <Compile Include="PriorityItems\UserImageItem.cs" />
+    <Compile Include="PriorityItems\UserImagePriorityItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2c7f0fc6-4e12-4bfd-a8f7-d10d8b40b93b}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{200126cc-74e5-44e5-bb88-a78ee2f67fc9}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProcessingInterface\ProcessingInterface.csproj">
+      <Project>{c21a3772-6b4a-44ff-a720-6c3bddc52766}</Project>
+      <Name>ProcessingInterface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

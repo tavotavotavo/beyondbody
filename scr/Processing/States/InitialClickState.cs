@@ -3,6 +3,35 @@ using Processing.Actions;
 
 namespace Processing.States
 {
+    internal class InitialMiniClickState : InitialClickState
+    {
+        internal InitialMiniClickState(CursorAction<FaceState> cursorAction)
+            : base(cursorAction)
+        {
+        }
+
+        protected override void SetHasBothEyesOpenState()
+        {
+            this.action.SetState<InitialMiniClickState>();
+        }
+        //finish it
+        protected override FaceState SetIsBlinkingEyeState()
+        {
+            this.action.SetState<InitialMiniClickState>();
+            return this.action.GetState<InitialMiniClickState>();
+        }
+
+        protected override bool IsBlinkingEye(Face face)
+        {
+            return face.IsBlinking;
+        }
+
+        protected override void SetElseState()
+        {
+            this.action.SetState<NotAboutToMiniClickState>();
+        }
+    }
+
     internal class InitialRightClickState : InitialClickState
     {
         internal InitialRightClickState(CursorAction<FaceState> cursorAction)

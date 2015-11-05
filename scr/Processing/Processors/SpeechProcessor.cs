@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Processing.Processors
 {
@@ -32,9 +33,11 @@ namespace Processing.Processors
 
                 this.isStarted = true;
 
+                Stopwatch timer = new Stopwatch();
+
                 var winFolder = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
 
-                var path = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)) + "\\ThirdPartyPrograms\\" + "osk.exe";
+                var path = new Uri(Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase)) + "\\ThirdPartyPrograms\\On-ScreenKeyboardPortable\\On-ScreenKeyboardPortable.exe";
 
                 var process = Process.Start(path);
 
@@ -73,10 +76,21 @@ namespace Processing.Processors
 
         private void KillAllProcesses()
         {
-            foreach (var process in this.processes)
+            if (this.isStarted)
+                this.keyboardSimulator.PressAddSymbol();
+
+            try
             {
-                if (!process.HasExited)
-                    process.Kill();
+                Process[] proc2 = Process.GetProcessesByName("On-ScreenKeyboardPortable");
+                Process[] proc = Process.GetProcessesByName("osk");
+
+                proc[0].CloseMainWindow();
+                proc[0].Close();
+                proc2[0].CloseMainWindow();
+                proc2[0].Close();
+            }
+            catch (Exception)
+            {
             }
 
             this.processes.Clear();

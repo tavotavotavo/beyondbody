@@ -77,6 +77,10 @@
       <Project>{200126cc-74e5-44e5-bb88-a78ee2f67fc9}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\KeyboardSimulation\KeyboardSimulation.csproj">
+      <Project>{adbdf504-ad98-4808-9187-d62c132d9315}</Project>
+      <Name>KeyboardSimulation</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="SpeechLib">

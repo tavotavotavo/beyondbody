@@ -1,21 +1,116 @@
-﻿using DetectorsResult;
-using Domain;
+﻿using Domain;
 using Emgu.CV;
-using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 
 namespace Detectors
 {
+    public static class AppConfiguration
+    {
+        public static bool HasGlasses { get { return true; } }
+    }
+
     public class EyeDetector : HaarCascadeDetector
     {
-        protected override double ScanFactor { get { return 1.5; } }
+        private IList<Action> increasePrecisionActions;
+        private int actionIndex;
 
-        protected override int Neighbours { get { return 3; } }
+        public EyeDetector()
+            : base()
+        {
+            this.actionIndex = 0;
+            this.increasePrecisionActions = new List<Action>();
+
+            if (AppConfiguration.HasGlasses)
+            {
+                this.ConfigureWithGlasses();
+            }
+            else
+            {
+                this.ConfigureWithoutGlasses();
+            }
+        }
+
+        //better detection
+        // scanfactor = 1.1
+        // neighbours = 5
+
+        public void ConfigureWithoutGlasses()
+        {
+            this.actionIndex = 0;
+            this.increasePrecisionActions.Clear();
+            this.HaarCascadeFileNames.Clear();
+            this.Neighbours = 5;
+            this.ScanFactor = 1.5;
+
+            this.HaarCascadeFileNames.Add("haarcascade eye new.xml");
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 4; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 3; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 2; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 1; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.4; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.3; });
+            this.increasePrecisionActions.Add(() =>
+            {
+                this.HaarCascadeFileNames.Add("haarcascade_eye.www-personal.umich.edu.xml");
+                this.Neighbours = 5;
+                this.ScanFactor = 1.5;
+            });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 4; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 3; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 2; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 1; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.4; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.3; });
+            this.increasePrecisionActions.Add(() =>
+            {
+                this.HaarCascadeFileNames.Add("haarcascade_eye_tree_eyeglasses.xml");
+                this.Neighbours = 5;
+                this.ScanFactor = 1.5;
+            });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 4; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 3; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 2; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 1; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.4; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.3; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.2; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.1; });
+        }
+
+        public void ConfigureWithGlasses()
+        {
+            this.actionIndex = 0;
+            this.increasePrecisionActions.Clear();
+            this.HaarCascadeFileNames.Clear();
+            this.Neighbours = 3;
+            this.ScanFactor = 1.4;
+
+            this.HaarCascadeFileNames.Add("haarcascade_eye_tree_eyeglasses.xml");
+            this.HaarCascadeFileNames.Add("haarcascade eye new.xml");
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 2; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 1; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.3; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.2; });
+            this.increasePrecisionActions.Add(() =>
+            {
+                this.HaarCascadeFileNames.Add("haarcascade_eye.www-personal.umich.edu.xml");
+                this.Neighbours = 3;
+                this.ScanFactor = 1.4;
+            });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 2; });
+            this.increasePrecisionActions.Add(() => { this.Neighbours = 1; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.3; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.2; });
+            this.increasePrecisionActions.Add(() => { this.ScanFactor = 1.1; });
+        }
+
+        protected override double ScanFactor { get; set; }
+
+        protected override int Neighbours { get; set; }
 
         public void DetectRightEye(Face face)
         {
@@ -29,6 +124,7 @@ namespace Detectors
 
             roi.Width = reducedImage.Width / 2;
             roi.Height = reducedImage.Height / 2;
+            roi.Y = reducedImage.ROI.Y + reducedImage.Height / 8;
 
             reducedImage.ROI = roi;
 
@@ -36,13 +132,7 @@ namespace Detectors
 
             Image<Gray, Byte> grayImage = reducedImage.Convert<Gray, byte>();
 
-            var haarCascade = new HaarCascade(this.HaarCascadePath);
-            var eyes = haarCascade.Detect(grayImage,
-                this.ScanFactor, //the image where the object are to be detected from
-                this.Neighbours, //factor by witch the window is scaled in subsequent scans
-                HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, //min number of neighbour rectangles
-                Size.Empty,
-                Size.Empty);
+            var eyes = this.DetectVarious(grayImage);
 
             foreach (var eye in eyes)
             {
@@ -52,16 +142,27 @@ namespace Detectors
                     new Rectangle(
                         new Point(
                             eye.rect.X + face.Zone.X,
-                            eye.rect.Y + face.Zone.Y),
+                            eye.rect.Y + face.Zone.Y + roi.Y),
                         new Size(
                             eye.rect.Width,
                             eye.rect.Height));
 
                 detectedEye.Image = face.Image;
 
-                result.Add(detectedEye);
-
-                break; //just the first one
+                //si el ojo no esta en la frente lo agregamos
+                if (!(detectedEye.Zone.Y + detectedEye.Zone.Height / 2 < face.Zone.Y + face.Zone.Height / 4))
+                {
+                    //si el ojo no esta en la boca lo agregamos
+                    if (!(detectedEye.Zone.Y + detectedEye.Zone.Height / 2 > face.Zone.Y + face.Zone.Height / 2))
+                    {
+                        //si el ojo no esta fuera de la cara lo agregamos
+                        if (!(detectedEye.Zone.X + detectedEye.Zone.Width / 2 < face.Zone.X + face.Zone.Width / 6))
+                        {
+                            result.Add(detectedEye);
+                            break;
+                        }
+                    }
+                }
             }
 
             var rightEye = result.FirstOrDefault();
@@ -83,6 +184,7 @@ namespace Detectors
 
             roi.Width = reducedImage.Width / 2;
             roi.Height = reducedImage.Height / 2;
+            roi.Y = reducedImage.ROI.Y + reducedImage.Height / 8;
             roi.X = roi.Width;
 
             reducedImage.ROI = roi;
@@ -91,13 +193,7 @@ namespace Detectors
 
             Image<Gray, Byte> grayImage = reducedImage.Convert<Gray, byte>();
 
-            var haarCascade = new HaarCascade(this.HaarCascadePath);
-            var eyes = haarCascade.Detect(grayImage,
-                this.ScanFactor, //the image where the object are to be detected from
-                this.Neighbours, //factor by witch the window is scaled in subsequent scans
-                HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, //min number of neighbour rectangles
-                Size.Empty,
-                Size.Empty);
+            var eyes = this.DetectVarious(grayImage);
 
             foreach (var eye in eyes)
             {
@@ -107,16 +203,27 @@ namespace Detectors
                     new Rectangle(
                         new Point(
                             eye.rect.X + face.Zone.X + roi.Width,
-                            eye.rect.Y + face.Zone.Y),
+                            eye.rect.Y + face.Zone.Y + roi.Y),
                         new Size(
                             eye.rect.Width,
                             eye.rect.Height));
 
                 detectedEye.Image = face.Image;
 
-                result.Add(detectedEye);
-
-                break; //just the first one
+                //si el ojo no esta en la frente lo agregamos
+                if (!(detectedEye.Zone.Y + detectedEye.Zone.Height / 2 < face.Zone.Y + face.Zone.Height / 4))
+                {
+                    //si el ojo no esta en la boca lo agregamos
+                    if (!(detectedEye.Zone.Y + detectedEye.Zone.Height / 2 > face.Zone.Y + face.Zone.Height / 2))
+                    {
+                        //si el ojo no esta fuera de la cara lo agregamos
+                        if (!(detectedEye.Zone.X + detectedEye.Zone.Width / 2 > face.Zone.X + face.Zone.Width - face.Zone.Width / 6))
+                        {
+                            result.Add(detectedEye);
+                            break;
+                        }
+                    }
+                }
             }
 
             var leftEye = result.FirstOrDefault();
@@ -126,9 +233,18 @@ namespace Detectors
             face.LeftEye.Image = face.Image;
         }
 
-        protected override string HaarCascadeFileNale
+        public void IncreasePrecision()
         {
-            get { return "haarcascade_eye.www-personal.umich.edu.xml"; }
+            if (this.actionIndex < this.increasePrecisionActions.Count())
+            {
+                this.increasePrecisionActions[actionIndex].Invoke();
+                this.actionIndex++;
+            }
+        }
+
+        protected override string HaarCascadeFileName
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

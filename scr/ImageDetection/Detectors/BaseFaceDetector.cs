@@ -14,7 +14,7 @@ namespace Detectors
         {
             var result = new List<Face>();
 
-            var factor = image.Width / 106;
+            var factor = image.Width / this.WidthToReduce;
 
             var reducedImage = image.Resize(image.Width / factor,
                     image.Height / factor,
@@ -24,17 +24,13 @@ namespace Detectors
 
             Image<Gray, Byte> grayImage = reducedImage.Convert<Gray, byte>();
 
-            var haarCascade = new HaarCascade(this.HaarCascadePath);
-            var faces = haarCascade.Detect(grayImage,
-                this.ScanFactor, //the image where the object are to be detected from
-                this.Neighbours, //factor by witch the window is scaled in subsequent scans
-                HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, //min number of neighbour rectangles
-                Size.Empty,
-                Size.Empty);
+            var faces = this.GetFacesVector(grayImage);
 
             foreach (var face in faces)
             {
                 var detectedFace = new Face();
+
+                detectedFace.IsFake = false;
 
                 detectedFace.Zone =
                     new Rectangle(
@@ -51,6 +47,18 @@ namespace Detectors
             }
 
             return result;
+        }
+
+        protected virtual MCvAvgComp[] GetFacesVector(Image<Gray, byte> grayImage)
+        {
+            var haarCascade = new HaarCascade(this.HaarCascadePath);
+
+            return haarCascade.Detect(grayImage,
+                this.ScanFactor, //the image where the object are to be detected from
+                this.Neighbours, //factor by witch the window is scaled in subsequent scans
+                HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, //min number of neighbour rectangles
+                Size.Empty,
+                Size.Empty);
         }
 
         protected virtual Image<Bgr, byte> AfterReducingImage(Image<Bgr, byte> reducedImage)

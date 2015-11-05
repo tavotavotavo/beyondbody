@@ -1,40 +1,34 @@
 ﻿using Domain;
 using Processing.Actions;
-using System.Diagnostics;
 
 namespace Processing.States
 {
-    internal class AboutToLeftDoubleClickState : FaceState
+    internal class AboutToLeftDoubleClickState : AboutToLeftClickState
     {
         internal AboutToLeftDoubleClickState(CursorAction<FaceState> cursorAction)
             : base(cursorAction)
         {
         }
 
-        internal override void Next(Face face)
+        protected override void BothEyesOpenState()
         {
-            if (this.timer.ElapsedMilliseconds > 500)
-            {
-                this.timer.Reset();
-                this.action.SetState<NotAboutToLeftClickState>();
-            }
-            else
-            {
-                if (face.HasBothEyesOpen)
-                {
-                    this.timer.Reset();
-                    this.action.SetState<ShouldLeftDoubleClickState>();
-                }
-                else if (face.IsBlinkingLeftEye)
-                {
-                    this.action.SetState<AboutToLeftDoubleClickState>();
-                }
-                else
-                {
-                    this.timer.Reset();
-                    this.action.SetState<NotAboutToLeftClickState>();
-                }
-            }
+            this.action.SetState<ShouldLeftDoubleClickState>();
+        }
+
+        protected override void IsBlinkingState()
+        {
+            this.action.SetState<AboutToLeftDoubleClickState>();
+        }
+
+        protected override AboutToAbortClickState AboutToAbort(int milliseconds)
+        {
+            this.action.SetState<AboutToAbortLeftDoubleClickState>();
+            var newState = this.action.GetState<AboutToAbortLeftDoubleClickState>();
+
+            newState.StartTimer();
+            newState.MaxErrorMilliseconds = milliseconds;
+
+            return newState;
         }
     }
 }

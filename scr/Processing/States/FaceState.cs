@@ -18,6 +18,7 @@ namespace Processing.States
 
         internal void StartTimer()
         {
+            timer.Reset();
             timer.Start();
         }
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Processing.Actions
 {
-    internal class RigthClickAction : CursorAction<FaceState>
+    internal class RigthClickAction : ClickAction
     {
         internal RigthClickAction(Action action) : base(action)
         {
@@ -14,6 +14,7 @@ namespace Processing.Actions
                 new NotAboutToRightClickState(this),
                 new InitialRightClickState(this),
                 new AboutToRightClickState(this),
+                new AboutToAbortRightClickState(this),
                 new ShouldRightClickState(this)
             };
 

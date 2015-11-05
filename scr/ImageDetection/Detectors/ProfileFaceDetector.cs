@@ -1,4 +1,5 @@
-﻿using Detection.PriorityAlgorithm;
+﻿using Common.PriorityAlgorithm;
+using Detection.PriorityAlgorithm;
 using Domain;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -17,51 +18,57 @@ namespace Detectors
         {
             this.priorityAlgorithm = new LifoAlgorithm<ProfileFaceItem>();
 
-            this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(true)));
-            this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(false)));
+            this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(true, 0.5)));
+            this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(false, 0.5)));
+            this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(true, 1)));
+            this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(false, 1)));
+            //this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(true, 2)));
+            //this.priorityAlgorithm.AddAlgorithmItem(new ProfileFacePriorityItem(new ProfileFaceItem(false, 2)));
         }
 
         protected override double ScanFactor
         {
             get
             {
-                return 1.5;
+                return 1.3;
             }
+            set { } 
         }
 
-        protected override int Neighbours { get { return 3; } }
+        protected override int Neighbours { get { return 3; } set { } }
 
         public override IEnumerable<Face> DetectFaces(Image<Bgr, byte> image)
         {
-            for (int i = 0; i < this.priorityAlgorithm.GetCount(); i++)
+            var item = this.priorityAlgorithm.Next();
+            Image<Bgr, byte> flippedImage = image;
+
+            if (item.ShouldFlip)
             {
-                var item = this.priorityAlgorithm.Next();
-                Image<Bgr, byte> flippedImage = image;
+                flippedImage = image.Flip(FLIP.HORIZONTAL);
+            }
 
-                if (item.ShouldFlip)
-                    flippedImage = image.Flip(FLIP.HORIZONTAL);
+            flippedImage = flippedImage.Mul(item.BrightnessMultiplier);
 
-                var profileFaces = base.DetectFaces(flippedImage);
+            var profileFaces = base.DetectFaces(flippedImage);
+            
+            if (profileFaces.Any())
+            {
+                this.priorityAlgorithm.SetFirst();
 
-                if (profileFaces.Any())
+                foreach (var face in profileFaces)
                 {
-                    this.priorityAlgorithm.SetFirst();
-
-                    foreach (var face in profileFaces)
-                    {
-                        face.Image = image;
-                        face.IsRightProfile = !item.ShouldFlip;
-                        face.IsLeftProfile = item.ShouldFlip;
-                    }
-
-                    return profileFaces;
+                    face.Image = image;
+                    face.IsRightProfile = !item.ShouldFlip;
+                    face.IsLeftProfile = item.ShouldFlip;
                 }
+
+                return profileFaces;
             }
 
             return new List<Face>();
         }
 
-        protected override string HaarCascadeFileNale
+        protected override string HaarCascadeFileName
         {
             get
             {

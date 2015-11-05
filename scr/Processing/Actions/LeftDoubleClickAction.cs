@@ -11,6 +11,7 @@ namespace Processing.Actions
         {
             this.states.Add(new InitialLeftDoubleClickState(this));
             this.states.Add(new AboutToLeftDoubleClickState(this));
+            this.states.Add(new AboutToAbortLeftDoubleClickState(this));
             this.states.Add(new ShouldLeftDoubleClickState(this));
         }
 

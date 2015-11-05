@@ -1,4 +1,5 @@
-﻿namespace Detection.PriorityAlgorithm
+﻿using Common.PriorityAlgorithm;
+namespace Detection.PriorityAlgorithm
 {
     public class RotatedFacePriorityItem : PriorityItem<RotatedFaceItem>
     {

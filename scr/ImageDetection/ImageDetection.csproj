@@ -91,18 +91,20 @@
     <Compile Include="Detectors\EyeDetector.cs" />
     <Compile Include="Detectors\FaceDetector.cs" />
     <Compile Include="Detectors\FrontalFaceDetector.cs" />
-    <Compile Include="Detectors\MouthDetector.cs" />
+    <Compile Include="Detectors\GesturesService.cs" />
     <Compile Include="Detectors\ProfileFaceDetector.cs" />
+    <Compile Include="Detectors\StopWatch.cs" />
     <Compile Include="PriorityAlgorithm\ProfileFacePriorityItem.cs" />
     <Compile Include="PriorityAlgorithm\ProfileFaceItem.cs" />
     <Compile Include="PriorityAlgorithm\RotatedFacePriorityItem.cs" />
     <Compile Include="PriorityAlgorithm\DetectorPriority.cs" />
-    <Compile Include="PriorityAlgorithm\LifoAlgorithm.cs" />
-    <Compile Include="PriorityAlgorithm\PriorityItem.cs" />
     <Compile Include="PriorityAlgorithm\RotatedFaceItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="HaarCascades\haarcascade eye new.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="HaarCascades\haarcascade_eye.www-personal.umich.edu.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -163,6 +165,9 @@
     <Content Include="HaarCascades\haarcascade_profileface.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="HaarCascades\haarcascade_profileface_new.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="HaarCascades\haarcascade_righteye_2splits.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -170,6 +175,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="HaarCascades\haarcascade_upperbody.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HaarCascades\ojoD.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="HaarCascades\ojoI.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Templates\Bgr\LeftCorner\leftCornerLeftEye.png">
@@ -264,9 +275,21 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2c7f0fc6-4e12-4bfd-a8f7-d10d8b40b93b}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{200126cc-74e5-44e5-bb88-a78ee2f67fc9}</Project>
       <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\KeyboardSimulation\KeyboardSimulation.csproj">
+      <Project>{adbdf504-ad98-4808-9187-d62c132d9315}</Project>
+      <Name>KeyboardSimulation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Login\Login.csproj">
+      <Project>{9ed83aad-27a8-454d-a786-446f48ced07c}</Project>
+      <Name>Login</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

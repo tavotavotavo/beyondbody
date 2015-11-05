@@ -84,13 +84,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\ActivateSpeechAction.cs" />
+    <Compile Include="Actions\ClickAction.cs" />
+    <Compile Include="Actions\MiniClickAction.cs" />
+    <Compile Include="Actions\DeactivateAction.cs" />
     <Compile Include="Actions\BaseAction.cs" />
+    <Compile Include="Actions\ActivateSpeechAction.cs" />
     <Compile Include="Actions\KeyboardAction.cs" />
     <Compile Include="Actions\LeftDoubleClickAction.cs" />
     <Compile Include="Actions\LeftClickAction.cs" />
     <Compile Include="Actions\CursorAction.cs" />
     <Compile Include="Actions\RigthClickAction.cs" />
+    <Compile Include="Processors\ActionProcessor.cs" />
+    <Compile Include="Processors\SpeechActionProcessor.cs" />
+    <Compile Include="Processors\DeactivateSpeechActionProcessor.cs" />
     <Compile Include="Processors\CursorActionProcessor.cs" />
     <Compile Include="Processors\ImageProcessor.cs" />
     <Compile Include="Processors\MainProcessor.cs" />
@@ -102,6 +108,11 @@
     <Compile Include="States\AboutToLeftClickState.cs" />
     <Compile Include="States\AboutToLeftDoubleClickState.cs" />
     <Compile Include="States\AboutToClickState.cs" />
+    <Compile Include="States\AboutToAbortClickState.cs" />
+    <Compile Include="States\AboutToAbortSpeechState.cs" />
+    <Compile Include="States\NotAboutToDeactivateState.cs" />
+    <Compile Include="States\ShouldDeactivateState.cs" />
+    <Compile Include="States\InitialDeativateState.cs" />
     <Compile Include="States\InitialActivateSpeechState.cs" />
     <Compile Include="States\ShouldLeftDoubleClickState.cs" />
     <Compile Include="States\InitialClickState.cs" />
@@ -150,11 +161,57 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="ThirdPartyPrograms\osk.exe">
+    <None Include="ThirdPartyPrograms\Beyond Body.chm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\App\AppInfo\appinfo.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\App\AppInfo\Launcher\On-ScreenKeyboardPortable.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Data\settings\On-ScreenKeyboardPortableSettings.ini">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Source\AppNamePortable.ini" />
+    <None Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Source\OSKLauncher2.0.7z" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\App\AppInfo\appicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\App\AppInfo\appicon_128.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\App\AppInfo\appicon_16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\App\AppInfo\appicon_32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\App\AppInfo\Launcher\splash.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\App\osk\OSKLauncher.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\App\osk\OSKLauncher64.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\help.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\On-ScreenKeyboardPortable.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Help\images\donation_button.png" />
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Help\images\favicon.ico" />
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Help\images\help_background_footer.png" />
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Help\images\help_background_header.png" />
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Help\images\help_logo_top.png" />
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Source\LauncherLicense.txt" />
+    <Content Include="ThirdPartyPrograms\On-ScreenKeyboardPortable\Other\Source\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

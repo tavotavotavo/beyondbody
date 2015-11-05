@@ -1,4 +1,5 @@
-﻿using Detection.PriorityAlgorithm;
+﻿using Common.PriorityAlgorithm;
+using Detection.PriorityAlgorithm;
 using Domain;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
@@ -19,23 +20,27 @@ namespace Detectors
         {
             this.priorityAlgorithm = new LifoAlgorithm<RotatedFaceItem>();
 
-            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(28)));
-            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(26)));
-            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(24)));
+            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(19)));
+            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(-19)));
+            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(18)));
+            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(-18)));
+            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(20)));
+            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(-20)));
             this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(22)));
             this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(-22)));
+            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(24)));
             this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(-24)));
+            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(26)));
             this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(-26)));
-            this.priorityAlgorithm.AddAlgorithmItem(new RotatedFacePriorityItem(new RotatedFaceItem(-28)));
         }
 
-        protected override int Neighbours { get { return 2; } }
+        protected override int Neighbours { get { return 2; } set { } }
 
-        protected override string HaarCascadeFileNale
+        protected override string HaarCascadeFileName
         {
             get
             {
-                return "haarcascade_frontalface_default.xml";
+                return "haarcascade_frontalface_alt.xml";
             }
         }
 
@@ -43,8 +48,9 @@ namespace Detectors
         {
             get
             {
-                return 1.5;
+                return 1.3;
             }
+            set { } 
         }
 
         protected override Image<Bgr, byte> AfterReducingImage(Image<Bgr, byte> reducedImage)
@@ -60,26 +66,22 @@ namespace Detectors
         {
             IEnumerable<Face> rotatedFaces = new List<Face>();
 
-            for (int i = 0; i < this.priorityAlgorithm.GetCount(); i++)
+            var nextItem = this.priorityAlgorithm.Next();
+
+            this.SetAngle(nextItem.Angle);
+            rotatedFaces = base.DetectFaces(image);
+
+            if (rotatedFaces.Any())
             {
-                var nextItem = this.priorityAlgorithm.Next();
-
-                this.SetAngle(nextItem.Angle);
-                rotatedFaces = base.DetectFaces(image);
-
-                if (rotatedFaces.Any())
+                foreach (var face in rotatedFaces)
                 {
-                    foreach (var face in rotatedFaces)
-                    {
-                        face.Image = image;
-                        face.IsRightRotated = nextItem.IsRight;
-                        face.IsLeftRotated = nextItem.IsLeft;
-                    }
-
-                    this.priorityAlgorithm.SetFirst();
-
-                    break;
+                    face.Image = image;
+                    face.IsRightRotated = nextItem.IsRight;
+                    face.IsLeftRotated = nextItem.IsLeft;
                 }
+
+                this.priorityAlgorithm.SetFirst();
+
             }
 
             return rotatedFaces;

@@ -21,6 +21,24 @@ namespace Processing.States
         }
     }
 
+    internal class NotAboutToMiniClickState : NotAboutToClickState
+    {
+        internal NotAboutToMiniClickState(CursorAction<FaceState> cursorAction)
+            : base(cursorAction)
+        {
+        }
+
+        protected override void SetBothEyesOpenState()
+        {
+            this.action.SetState<InitialMiniClickState>();
+        }
+
+        protected override void SetNotBothEyesOpenState()
+        {
+            this.action.SetState<NotAboutToMiniClickState>();
+        }
+    }
+
     internal class NotAboutToLeftClickState : NotAboutToClickState
     {
         internal NotAboutToLeftClickState(CursorAction<FaceState> cursorAction)

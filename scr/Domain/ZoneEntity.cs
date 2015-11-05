@@ -1,11 +1,7 @@
-﻿using Emgu.CV;
+﻿using Domain.Extensions;
+using Emgu.CV;
 using Emgu.CV.Structure;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain
 {
@@ -14,6 +10,8 @@ namespace Domain
         public Image<Bgr, byte> Image { get; set; }
 
         public Rectangle Zone { get; set; }
+
+        public Point Center { get { return this.Zone.Center(); } }
 
         public override bool IsEmpty
         {

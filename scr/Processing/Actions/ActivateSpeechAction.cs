@@ -1,4 +1,6 @@
-﻿using Processing.States;
+﻿using Domain;
+using Processing.States;
+using System;
 using System.Collections.Generic;
 
 namespace Processing.Actions
@@ -12,6 +14,7 @@ namespace Processing.Actions
                 new NotAboutToActivateSpeechState(this),
                 new InitialActivateSpeechState(this),
                 new AboutToActivateSpeechState(this),
+                new AboutToAbortSpeechState(this),
                 new ShouldActivateSpeechState(this)
             };
 

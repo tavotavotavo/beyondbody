@@ -1,0 +1,13 @@
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Domain.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Domain.pdb
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Emgu.CV.DebuggerVisualizers.VS2010.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Emgu.CV.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Emgu.CV.GPU.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Emgu.CV.ML.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Emgu.CV.OCR.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Emgu.CV.Stitching.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Emgu.CV.UI.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\bin\Release\Emgu.Util.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\obj\Release\Domain.csprojResolveAssemblyReference.cache
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\obj\Release\Domain.dll
+C:\Users\aguia_000\My Projects\BeyondBodyApp\Domain\obj\Release\Domain.pdb

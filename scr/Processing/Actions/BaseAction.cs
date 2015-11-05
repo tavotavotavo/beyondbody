@@ -1,5 +1,6 @@
 ﻿using Domain;
 using Processing.States;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,6 +10,23 @@ namespace Processing.Actions
     {
         protected IList<TState> states;
         protected TState currentState;
+        protected TDomain currentEntity;
+        
+        private Action action;
+
+        public BaseAction(Action action)
+        {
+            this.action = action;
+        }
+
+        public BaseAction()
+        {
+        }
+        
+        internal void Execute()
+        {
+            this.action.Invoke();
+        }
 
         internal T GetState<T>() where T : TState
         {
@@ -20,8 +38,9 @@ namespace Processing.Actions
             this.currentState = this.GetState<T>();
         }
 
-        internal void NextState(TDomain face)
+        internal virtual void NextState(TDomain face)
         {
+            this.currentEntity = face;
             this.currentState.Next(face);
         }
 

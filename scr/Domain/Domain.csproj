@@ -83,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
+    <Compile Include="Exceptions\RegisterException.cs" />
+    <Compile Include="Extensions\RectangleExtensions.cs" />
+    <Compile Include="Gesture.cs" />
     <Compile Include="Mouth.cs" />
     <Compile Include="Nose.cs" />
     <Compile Include="ZoneEntity.cs" />

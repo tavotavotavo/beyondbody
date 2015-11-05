@@ -10,34 +10,51 @@ namespace Processing.States
         {
         }
 
-        protected abstract void SetHasBothEyesOpenState();
+        protected abstract void BothEyesOpenState();
 
-        protected abstract void SetIsBlinkingEyeState();
+        protected abstract void IsBlinkingState();
 
-        protected abstract bool IsBlinkingEye(Face face);
+        protected abstract AboutToAbortClickState AboutToAbort(int milliseconds);
 
-        protected abstract void SetAbortClickingState();
+        protected abstract bool IsBlinking(Face face);
+
+        protected abstract void AbortClick();
+
+        protected virtual int MinSeconds { get { return 500; } }
+
+        protected virtual int MaxSeconds { get { return 2000; } }
 
         internal override void Next(Face face)
         {
-            if (timer.ElapsedMilliseconds > 500)
+            if (timer.ElapsedMilliseconds > this.MaxSeconds)
             {
-                this.SetAbortClickingState();
+                this.AbortClick();
                 this.ResetTimer();
             }
             else if (face.HasBothEyesOpen)
             {
-                this.SetHasBothEyesOpenState();
-                this.ResetTimer();
+                if (timer.ElapsedMilliseconds < this.MinSeconds)
+                {
+                    this.AboutToAbort(300);
+                }
+                else
+                {
+                    ((ClickAction)this.action).Clicks++;
+                    this.ResetTimer();
+                    this.BothEyesOpenState();
+                }
             }
-            else if (this.IsBlinkingEye(face))
+            else if (this.IsBlinking(face))
             {
-                this.SetIsBlinkingEyeState();
+                this.IsBlinkingState();
+            }
+            else if (face.HasBothEyesClosed)
+            {
+                this.AboutToAbort(200);
             }
             else
             {
-                this.SetAbortClickingState();
-                this.ResetTimer();
+                this.AboutToAbort(100);
             }
         }
     }

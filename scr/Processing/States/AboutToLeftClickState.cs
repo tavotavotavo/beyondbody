@@ -10,7 +10,7 @@ namespace Processing.States
         {
         }
 
-        protected override void SetHasBothEyesOpenState()
+        protected override void BothEyesOpenState()
         {
             if (this.action is LeftDoubleClickAction)
             {
@@ -23,19 +23,30 @@ namespace Processing.States
             }
         }
 
-        protected override void SetIsBlinkingEyeState()
+        protected override void IsBlinkingState()
         {
             this.action.SetState<AboutToLeftClickState>();
         }
 
-        protected override bool IsBlinkingEye(Face face)
+        protected override bool IsBlinking(Face face)
         {
             return face.IsBlinkingLeftEye;
         }
 
-        protected override void SetAbortClickingState()
+        protected override void AbortClick()
         {
             this.action.SetState<NotAboutToLeftClickState>();
+        }
+
+        protected override AboutToAbortClickState AboutToAbort(int milliseconds)
+        {
+            this.action.SetState<AboutToAbortLeftClickState>();
+            var newState = this.action.GetState<AboutToAbortLeftClickState>();
+
+            newState.StartTimer();
+            newState.MaxErrorMilliseconds = milliseconds;
+
+            return newState;
         }
     }
 }

@@ -9,5 +9,14 @@ namespace Processing.Actions
     internal abstract class KeyboardAction<TState> : BaseAction<TState, Face>
         where TState : FaceState
     {
+        public KeyboardAction(Action action)
+            : base(action)
+        {
+        }
+
+        public KeyboardAction()
+            : base()
+        {
+        }
     }
 }

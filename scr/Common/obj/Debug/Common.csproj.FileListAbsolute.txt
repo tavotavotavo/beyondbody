@@ -1,0 +1,10 @@
+C:\Users\aguia_000\My Projects\beyond-body\BeyondBodyApp\Common\bin\Debug\Common.dll
+C:\Users\aguia_000\My Projects\beyond-body\BeyondBodyApp\Common\bin\Debug\Common.pdb
+C:\Users\aguia_000\My Projects\beyond-body\BeyondBodyApp\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Users\aguia_000\My Projects\beyond-body\BeyondBodyApp\Common\obj\Debug\Common.dll
+C:\Users\aguia_000\My Projects\beyond-body\BeyondBodyApp\Common\obj\Debug\Common.pdb
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBodyApp\Common\bin\Debug\Common.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBodyApp\Common\bin\Debug\Common.pdb
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBodyApp\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBodyApp\Common\obj\Debug\Common.dll
+C:\Users\tavo.SyT5\My Projects\beyond-body\BeyondBodyApp\Common\obj\Debug\Common.pdb

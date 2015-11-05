@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace MouseSimulation.Simulators
@@ -9,27 +11,29 @@ namespace MouseSimulation.Simulators
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
 
-        private const uint MOUSEEVENTF_LEFTDOWN = 0x02;
-        private const uint MOUSEEVENTF_LEFTUP = 0x04;
-        private const uint MOUSEEVENTF_RIGHTDOWN = 0x08;
-        private const uint MOUSEEVENTF_RIGHTUP = 0x10;
+        [Flags]
+        public enum MouseEventFlags : uint
+        {
+            LEFTDOWN = 0x00000002,
+            LEFTUP = 0x00000004,
+            MIDDLEDOWN = 0x00000020,
+            MIDDLEUP = 0x00000040,
+            MOVE = 0x00000001,
+            ABSOLUTE = 0x00008000,
+            RIGHTDOWN = 0x00000008,
+            RIGHTUP = 0x00000010
+        }
 
         private void DoMouseClick()
         {
-            //Call the imported function with the cursor's current position
-            uint X = (uint)Cursor.Position.X;
-            uint Y = (uint)Cursor.Position.Y;
-            mouse_event(MOUSEEVENTF_LEFTDOWN, X, Y, 0, 0);
-            mouse_event(MOUSEEVENTF_LEFTUP, X, Y, 0, 0);
+            mouse_event((uint)(MouseEventFlags.LEFTDOWN | MouseEventFlags.LEFTUP | MouseEventFlags.ABSOLUTE),
+                (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, (uint)UIntPtr.Zero);
         }
 
         private void DoMouseRightClick()
         {
-            //Call the imported function with the cursor's current position
-            uint X = (uint)Cursor.Position.X;
-            uint Y = (uint)Cursor.Position.Y;
-            mouse_event(MOUSEEVENTF_RIGHTDOWN, X, Y, 0, 0);
-            mouse_event(MOUSEEVENTF_RIGHTUP, X, Y, 0, 0);
+            mouse_event((uint)(MouseEventFlags.RIGHTDOWN | MouseEventFlags.RIGHTUP | MouseEventFlags.ABSOLUTE), 
+                (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, (uint)UIntPtr.Zero);
         }
 
         public void SimulateClick()
@@ -50,22 +54,37 @@ namespace MouseSimulation.Simulators
 
         public void MoveCursorToRight(uint distance)
         {
-            this.MoveCursorToX((int)distance);
+            int newDistance = this.ConvertDistance((int)distance);
+            this.MoveCursorToX(newDistance);
         }
 
         public void MoveCursorToLeft(uint distance)
         {
-            this.MoveCursorToX((int)distance * -1);
+            int newDistance = this.ConvertDistance((int)distance);
+            this.MoveCursorToX(newDistance * -1);
         }
 
         public void MoveCursorToBottom(uint distance)
         {
-            this.MoveCursorToY((int)distance);
+            int newDistance = this.ConvertDistance((int)distance);
+            this.MoveCursorToY(newDistance);
         }
 
         public void MoveCursorToTop(uint distance)
         {
-            this.MoveCursorToY((int)distance * -1);
+            int newDistance = this.ConvertDistance((int)distance);
+            this.MoveCursorToY(newDistance * -1);
+        }
+
+        private int ConvertDistance(int distance)
+        {
+            if (distance < 40)
+                return (int)Math.Pow(distance / 4, 1.1);
+
+            if (distance < 400)
+                return (int)Math.Pow(distance / 4, 1.2);
+
+            return (int)Math.Pow(distance / 4, 1.3);
         }
 
         private void MoveCursorToX(int distance)

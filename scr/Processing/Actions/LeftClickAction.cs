@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Processing.Actions
 {
-    internal class LeftClickAction : CursorAction<FaceState>
+    internal class LeftClickAction : ClickAction
     {
         internal LeftClickAction(Action action)
             : base(action)
@@ -15,6 +15,7 @@ namespace Processing.Actions
                 new NotAboutToLeftClickState(this),
                 new InitialLeftClickState(this),
                 new AboutToLeftClickState(this),
+                new AboutToAbortLeftClickState(this),
                 new ShouldLeftClickState(this)
             };
 

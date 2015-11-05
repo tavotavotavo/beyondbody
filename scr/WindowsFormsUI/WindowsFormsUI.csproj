@@ -83,25 +83,100 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigForm.Designer.cs">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="LeftArrow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LeftArrow.Designer.cs">
+      <DependentUpon>LeftArrow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegisterForm.Designer.cs">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RightArrow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RightArrow.Designer.cs">
+      <DependentUpon>RightArrow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrainingBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrainingBox.Designer.cs">
+      <DependentUpon>TrainingBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinAPI.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ConfigForm.resx">
+      <DependentUpon>ConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LeftArrow.resx">
+      <DependentUpon>LeftArrow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegisterForm.resx">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RightArrow.resx">
+      <DependentUpon>RightArrow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrainingBox.resx">
+      <DependentUpon>TrainingBox.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{200126cc-74e5-44e5-bb88-a78ee2f67fc9}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ImageDetection\ImageDetection.csproj">
+      <Project>{c912cf78-e2cf-4079-918b-d93b17969923}</Project>
+      <Name>ImageDetection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Login\Login.csproj">
+      <Project>{9ed83aad-27a8-454d-a786-446f48ced07c}</Project>
+      <Name>Login</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProcessingInterface\ProcessingInterface.csproj">
       <Project>{c21a3772-6b4a-44ff-a720-6c3bddc52766}</Project>
       <Name>ProcessingInterface</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\left-arrow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\right-arrow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

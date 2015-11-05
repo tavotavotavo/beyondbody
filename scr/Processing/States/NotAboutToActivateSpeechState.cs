@@ -12,7 +12,7 @@ namespace Processing.States
 
         internal override void Next(Face face)
         {
-            if (face.HasBothEyesOpen)
+            if (!face.HasBothEyesClosed)
             {
                 this.action.SetState<InitialActivateSpeechState>();
             }

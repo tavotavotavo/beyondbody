@@ -1,34 +1,35 @@
-﻿using DetectorsResult;
-using Domain;
+﻿using Domain;
 using Emgu.CV;
-using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Detectors
 {
     public class FrontalFaceDetector : BaseFaceDetector
     {
-        protected override string HaarCascadeFileNale
+        protected override string HaarCascadeFileName
         {
             get
             {
-                return "haarcascade_frontalface_default.xml";
+                return "haarcascade_frontalface_alt.xml";
             }
         }
 
-        protected override double ScanFactor { get { return 1.5; } }
+        protected override double ScanFactor { get { return 1.4; } set { } }
 
-        protected override int Neighbours { get { return 3; } }
+        protected override int Neighbours { get { return 2; } set { } }
 
         public FrontalFaceDetector()
             : base()
         {
+            this.HaarCascadeFileNames.Add(this.HaarCascadeFileName);
+            //this.HaarCascadeFileNames.Add("haarcascade_frontalface_default.xml");
+        }
+
+        protected override MCvAvgComp[] GetFacesVector(Image<Gray, byte> grayImage)
+        {
+            return this.DetectVarious(grayImage);
         }
 
         public override IEnumerable<Face> DetectFaces(Image<Bgr, byte> image)
