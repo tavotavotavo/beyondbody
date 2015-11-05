@@ -22,6 +22,33 @@
 *.a
 *.lib
 
+#Autosave files
+*~
+
+# Build/test output
+obj
+bin
+test-results
+*.orig
+
+# VS sometimes writes these for no apparent reason
+_UpgradeReport_Files
+UpgradeLog.*
+
+# Per-user data
+*.sln.cache
+*.suo
+*.userprefs
+*.usertasks
+*.user
+
+# ReSharper
+*_Resharper.*
+*.Resharper
+
+# dotCover
+*.dotCover
+
 # Executables
 *.exe
 *.out
