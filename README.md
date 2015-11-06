@@ -51,4 +51,5 @@ In order to run the program correctly you need:
 
 Let me know whether you have any doubt about the project or something does not work.
 
-Skype: gustavo.nahuel.aguiar
+- Skype: gustavo.nahuel.aguiar
+- Facebook: https://www.facebook.com/beyondbodyapp
