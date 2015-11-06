@@ -1,6 +1,6 @@
 # BeyondBody
 
-This is an WinForm application that allows people to move the mouse and do clicks by moving head and blinking eyes.
+This is a WinForm application that allows people to move the mouse and do clicks by moving head and blinking eyes.
 
 It has several modules:
 - Login in Configuration, where you login through a face recognition process
