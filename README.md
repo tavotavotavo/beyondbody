@@ -3,7 +3,7 @@
 This is a WinForm application that allows people to move the mouse and do clicks by moving head and blinking eyes.
 
 It has several modules:
-- Login in Configuration, where you login through a face recognition process
+- Sign in Configuration, where you Sign in through a face recognition process
 - Gestures, where you configure gestures with the mouth for writting specific words
 - Training mode
 - Among others (will have to right later xP)
@@ -17,15 +17,6 @@ Used technologies and libraries are:
 ## Detailed Documentation
 
 You can find detailed but outdated documentation about beyondbody into the 'doc' folder beside 'src' folder.
-
-## About me
-
-This is also the result of a year of hard work. With this project I graduated at the university in december 2014.
-I want to thank my university team for helping me developing this app.
-
-## Goal
-
-It 'd be great anyone can continue this work and let others now about beyondbody, the main reason the application was made is that people with upper limb dissabilities could use a computer in an easier way.
 
 ### Instructions before compiling
 
