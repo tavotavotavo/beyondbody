@@ -16,7 +16,7 @@ Used technologies and libraries are:
 
 ## Detailed Documentation
 
-You can find detailed but outdated documentation about beyondbody into the 'doc' folder beside 'src' folder.
+You can find detailed documentation about beyondbody into the 'doc' folder beside 'src' folder.
 
 ### Instructions before compiling
 
